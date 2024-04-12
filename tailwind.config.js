@@ -3,8 +3,8 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     fontFamily: {
-      sans: 'Crimson Pro, sans-serif',
-      paragraph: 'Dosis',
+      sans: 'Roboto Slab, sans-serif',
+      paragraph: 'Roboto',
     },
     extend: {
       height: {
