@@ -3,7 +3,7 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     fontFamily: {
-      sans: 'Roboto Slab, sans-serif',
+      sans: 'Poppins, sans-serif',
       paragraph: 'Roboto',
     },
     extend: {
@@ -20,10 +20,11 @@ export default {
         Low1: '#06FF00',
         Low2: '#3AFF35',
         Low3: '#BAFFB4',
-        stroke: '#E5E9EF',
-        NavBar: '#F9F9F9',
-        NavBarClick: '#D9D9D9',
         Button: '#5260FC',
+        ButtonHover: '#524CFC',
+        ButtonActive: '#5238FC',
+        HomeFrom: '#EFF5FB',
+        HomeTo: '#FCE9FD',
       },
       fontSize: {
         h1: '4.5rem',
