@@ -1,17 +1,35 @@
 import { ucFirst } from '../utils/ucFirst';
 
-const Tag = ({ type }: { type: string }) => {
+const base = 'px-3 py-2 rounded border-2 rounded-md transition-all ';
+
+const style: { [key: string]: string } = {
+  high: base + 'bg-High',
+  hard: base + 'bg-High',
+  medium: base + 'bg-Medium',
+  normal: base + 'bg-Medium',
+  low: base + 'bg-Low',
+  easy: base + 'bg-Low',
+  none: base + 'text-slate-400',
+};
+
+const Tag = ({
+  type,
+  select = type,
+  button = true,
+  handler,
+}: {
+  type: string;
+  select?: string;
+  button?: boolean;
+  handler?: () => void;
+}) => {
   const tagType = ucFirst(type);
-  const style: { [key: string]: string } = {
-    high: 'bg-High3',
-    hard: 'bg-High3',
-    medium: 'bg-Medium3',
-    normal: 'bg-Medium3',
-    low: 'bg-Low3',
-    easy: 'bg-Low3',
-  };
+
   return (
-    <span className={`px-3 py-2 rounded ${style[tagType]} text-h5`}>
+    <span
+      className={`${type === select ? style[type] : style['none']} ${button ? 'cursor-pointer' : ''} `}
+      onClick={handler}
+    >
       # {tagType}
     </span>
   );
