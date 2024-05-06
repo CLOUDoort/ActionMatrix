@@ -1,7 +1,7 @@
 import { NavLink, useSearchParams } from 'react-router-dom';
-import { activeLink, normalLink } from './AppNav';
 
 import { ucFirst } from '../../utils/ucFirst';
+import { activeLink, normalLink } from './AppNavList';
 
 type PropsType = {
   to: string;
