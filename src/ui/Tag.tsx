@@ -27,7 +27,7 @@ const Tag = ({
 
   return (
     <span
-      className={`${type === select ? style[type] : style['none']} ${button ? 'cursor-pointer' : ''} `}
+      className={`${type === select ? style[type] + ' border-black' : style['none']} ${button ? 'cursor-pointer' : ''} `}
       onClick={handler}
     >
       # {tagType}
