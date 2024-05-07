@@ -6,7 +6,7 @@ import { TaskFormInterface } from 'Form';
 import { nanoid } from 'nanoid';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { useSubtask } from './SubtaskContext';
+import { useCreateSubtask } from './CreateSubtaskContext';
 import { toast } from 'react-toastify';
 import { useCreateTask } from '../../services/apiCreateTask';
 
@@ -23,7 +23,7 @@ const CreateTask = () => {
   const [flashBorder, setFlashBorder] = useState(false);
   const [state, setState] = useState(initialFormState);
   const { title, details, priority, option, difficulty } = state;
-  const { subtask, clearSubtask } = useSubtask();
+  const { subtask, clearSubtask } = useCreateSubtask();
 
   const handleState = (key: string, value: string | boolean) => {
     setState((prev) => ({ ...prev, [key]: value }));

@@ -14,7 +14,7 @@ type ActionInterface = {
   payload?: any;
 };
 
-const SubtaskContext = createContext<ValueInterface | null>(null);
+const CreateSubtaskContext = createContext<ValueInterface | null>(null);
 
 const initialState = {
   hard: [],
@@ -53,7 +53,7 @@ const reducer = (state: SubtaskInterface, action: ActionInterface): SubtaskInter
   }
 };
 
-const SubtaskProvider = ({ children }: { children: ReactNode }) => {
+const CreateSubtaskContextProvider = ({ children }: { children: ReactNode }) => {
   const [subtask, dispatch] = useReducer(reducer, initialState);
 
   const createSubtask = (subtask: SubtaskItemInterface) => {
@@ -87,16 +87,16 @@ const SubtaskProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <SubtaskContext.Provider value={{ subtask, createSubtask, modifySubtask, deleteSubtask, clearSubtask }}>
+    <CreateSubtaskContext.Provider value={{ subtask, createSubtask, modifySubtask, deleteSubtask, clearSubtask }}>
       {children}
-    </SubtaskContext.Provider>
+    </CreateSubtaskContext.Provider>
   );
 };
 
-const useSubtask = () => {
-  const context = useContext(SubtaskContext);
+const useCreateSubtask = () => {
+  const context = useContext(CreateSubtaskContext);
   if (context === null) throw new Error('Subtask Context was used outside the SubtaskProvider');
   return context;
 };
 
-export { SubtaskProvider, useSubtask };
+export { CreateSubtaskContextProvider, useCreateSubtask };

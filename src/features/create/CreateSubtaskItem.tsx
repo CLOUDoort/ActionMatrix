@@ -1,6 +1,6 @@
 import { LuDot } from 'react-icons/lu';
 import { TiDelete } from 'react-icons/ti';
-import { useSubtask } from './SubtaskContext';
+import { useCreateSubtask } from './CreateSubtaskContext';
 import { useState } from 'react';
 import Button from '../../ui/Button';
 import Tag from '../../ui/Tag';
@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { SubtaskItemInterface } from 'Task';
 
 const CreateSubtaskItem = ({ subtask }: { subtask: SubtaskItemInterface }) => {
-  const { deleteSubtask, modifySubtask } = useSubtask();
+  const { deleteSubtask, modifySubtask } = useCreateSubtask();
   const [modifyState, setModifyState] = useState(false);
   const initialState: SubtaskItemInterface = { ...subtask };
   const [form, setForm] = useState(initialState);

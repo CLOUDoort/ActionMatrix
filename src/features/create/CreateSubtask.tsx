@@ -5,7 +5,7 @@ import { HiOutlinePlus } from 'react-icons/hi';
 import SubtaskList from './CreateSubtaskList';
 import Tag from '../../ui/Tag';
 import { nanoid } from 'nanoid';
-import { useSubtask } from './SubtaskContext';
+import { useCreateSubtask } from './CreateSubtaskContext';
 import { toast } from 'react-toastify';
 import { SubtaskFormItemInterface } from 'Form';
 
@@ -22,7 +22,7 @@ const initialFormState: SubtaskFormItemInterface = {
 };
 
 const CreateSubtask = ({ priority, option, flashHandler }: CreateSubtaskProps) => {
-  const { createSubtask } = useSubtask();
+  const { createSubtask } = useCreateSubtask();
   const [form, setForm] = useState(initialFormState);
   const [buttonState, setButtonState] = useState<boolean>(false);
   const { title, details, difficulty } = form;
