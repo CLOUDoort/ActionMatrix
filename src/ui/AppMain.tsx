@@ -1,14 +1,34 @@
 import Button from './Button';
 import { HiOutlinePlus } from 'react-icons/hi2';
 import { ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import Tag from './Tag';
 
 const AppMain = ({ children, name }: { children: ReactNode; name: string }) => {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const priority = searchParams.get('priority');
+  const difficulty = searchParams.get('difficulty');
+
+  const priorityHandler = () => {
+    if (difficulty) setSearchParams({ difficulty });
+    else setSearchParams({});
+  };
+  const difficultyHandler = () => {
+    if (priority) setSearchParams({ priority });
+    else setSearchParams({});
+  };
+
   return (
     <div className="grid w-full h-full grid-rows-[auto_1fr] gap-3 lg:px-14 px-5 py-10 max-w-7xl">
       <div className="flex items-center justify-between h-16 pb-5 lg:text-h3 text-h4 ">
-        <span>{name}</span>
+        <div className="flex items-center gap-4">
+          <span>{name}</span>
+          <span className="space-x-2 text-sm">
+            {priority && <Tag type={priority} handler={priorityHandler} />}
+            {difficulty && <Tag type={difficulty} handler={difficultyHandler} />}
+          </span>
+        </div>
         <Button type="create" handler={() => navigate('/app/create')}>
           <HiOutlinePlus size={20} />
           <span>New Task</span>
