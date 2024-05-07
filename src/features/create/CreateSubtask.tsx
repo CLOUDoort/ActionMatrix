@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import { SubtaskFormItemInterface } from 'Form';
 
 interface CreateSubtaskProps {
+  priority: string;
   option: boolean;
   flashHandler: Dispatch<SetStateAction<boolean>>;
 }
@@ -20,7 +21,7 @@ const initialFormState: SubtaskFormItemInterface = {
   difficulty: 'hard',
 };
 
-const CreateSubtask = ({ option, flashHandler }: CreateSubtaskProps) => {
+const CreateSubtask = ({ priority, option, flashHandler }: CreateSubtaskProps) => {
   const { createSubtask } = useSubtask();
   const [form, setForm] = useState(initialFormState);
   const [buttonState, setButtonState] = useState<boolean>(false);
@@ -55,6 +56,8 @@ const CreateSubtask = ({ option, flashHandler }: CreateSubtaskProps) => {
       title,
       details,
       difficulty,
+      priority,
+      progress: 0,
     });
     toast.success('Create Subtask Success!');
     reset();

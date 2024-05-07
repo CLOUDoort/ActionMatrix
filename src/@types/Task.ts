@@ -4,6 +4,8 @@ declare module 'Task' {
     title: string;
     details: string;
     difficulty: string;
+    progress: number;
+    priority: string;
   }
   export interface SubtaskInterface {
     [key: string]: SubtaskItemInterface[];

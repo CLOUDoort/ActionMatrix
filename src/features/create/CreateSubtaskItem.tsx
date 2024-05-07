@@ -10,14 +10,9 @@ import { SubtaskItemInterface } from 'Task';
 const CreateSubtaskItem = ({ subtask }: { subtask: SubtaskItemInterface }) => {
   const { deleteSubtask, modifySubtask } = useSubtask();
   const [modifyState, setModifyState] = useState(false);
-  const initialState: SubtaskItemInterface = {
-    id: subtask.id,
-    title: subtask.title,
-    details: subtask.details,
-    difficulty: subtask.difficulty,
-  };
+  const initialState: SubtaskItemInterface = { ...subtask };
   const [form, setForm] = useState(initialState);
-  const { id, title, details, difficulty } = form;
+  const { id, title, details, difficulty, priority, progress } = form;
   const handleState = (key: string, value: string) => {
     setForm((prev) => ({ ...prev, [key]: value }));
   };
@@ -41,6 +36,8 @@ const CreateSubtaskItem = ({ subtask }: { subtask: SubtaskItemInterface }) => {
       title,
       details,
       difficulty,
+      priority,
+      progress,
     };
     modifySubtask(subtask, modifiedSubtask);
     toast.success('Modify Success!');

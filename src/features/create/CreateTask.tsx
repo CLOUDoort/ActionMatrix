@@ -115,7 +115,7 @@ const CreateTask = () => {
             </Button>
           </div>
         </form>
-        <CreateSubtask option={option} flashHandler={setFlashBorder} />
+        <CreateSubtask priority={priority} option={option} flashHandler={setFlashBorder} />
       </div>
     </AppMain>
   );
