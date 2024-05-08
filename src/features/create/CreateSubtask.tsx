@@ -7,7 +7,7 @@ import Tag from '../../ui/Tag';
 import { nanoid } from 'nanoid';
 import { useCreateSubtask } from './CreateSubtaskContext';
 import { toast } from 'react-toastify';
-import { SubtaskFormItemInterface } from 'Form';
+import type { SubtaskFormItem } from 'Form';
 
 interface CreateSubtaskProps {
   priority: string;
@@ -15,7 +15,7 @@ interface CreateSubtaskProps {
   flashHandler: Dispatch<SetStateAction<boolean>>;
 }
 
-const initialFormState: SubtaskFormItemInterface = {
+const initialFormState: SubtaskFormItem = {
   title: '',
   details: '',
   difficulty: 'hard',

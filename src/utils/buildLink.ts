@@ -4,8 +4,8 @@ import { clearLink } from './clearLink';
 import queryString from 'query-string';
 
 interface BuildLinkInterface {
-  priority?: string;
-  difficulty?: string;
+  priority: string;
+  difficulty: string;
 }
 
 export const buildLink = (nxtPriority?: string, nxtDifficulty?: string) => {
@@ -17,7 +17,7 @@ export const buildLink = (nxtPriority?: string, nxtDifficulty?: string) => {
   const curDifficulty = curParams.difficulty as string | undefined;
 
   // 다음 url로 설정할 params
-  const params: BuildLinkInterface = {};
+  const params: Partial<BuildLinkInterface> = {};
   const priority = clearLink(curPriority, nxtPriority);
   const difficulty = clearLink(curDifficulty, nxtDifficulty);
   if (priority) params.priority = priority;

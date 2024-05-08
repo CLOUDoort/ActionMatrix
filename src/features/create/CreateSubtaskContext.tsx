@@ -1,11 +1,11 @@
-import { SubtaskInterface, SubtaskItemInterface } from 'Task';
+import type { Subtask, SubtaskItem } from 'Task';
 import { ReactNode, createContext, useContext, useReducer } from 'react';
 
 interface ValueInterface {
-  subtask: SubtaskInterface;
-  createSubtask: (subtask: SubtaskItemInterface) => void;
-  modifySubtask: (pre: SubtaskItemInterface, cur: SubtaskItemInterface) => void;
-  deleteSubtask: (subtask: SubtaskItemInterface) => void;
+  subtask: Subtask;
+  createSubtask: (subtask: SubtaskItem) => void;
+  modifySubtask: (pre: SubtaskItem, cur: SubtaskItem) => void;
+  deleteSubtask: (subtask: SubtaskItem) => void;
   clearSubtask: () => void;
 }
 
@@ -22,7 +22,7 @@ const initialState = {
   easy: [],
 };
 
-const reducer = (state: SubtaskInterface, action: ActionInterface): SubtaskInterface => {
+const reducer = (state: Subtask, action: ActionInterface): Subtask => {
   switch (action.type) {
     case 'subtask/created': {
       return {
@@ -56,14 +56,14 @@ const reducer = (state: SubtaskInterface, action: ActionInterface): SubtaskInter
 const CreateSubtaskContextProvider = ({ children }: { children: ReactNode }) => {
   const [subtask, dispatch] = useReducer(reducer, initialState);
 
-  const createSubtask = (subtask: SubtaskItemInterface) => {
+  const createSubtask = (subtask: SubtaskItem) => {
     dispatch({
       type: 'subtask/created',
       payload: subtask,
     });
   };
 
-  const modifySubtask = (prev: SubtaskItemInterface, cur: SubtaskItemInterface) => {
+  const modifySubtask = (prev: SubtaskItem, cur: SubtaskItem) => {
     dispatch({
       type: 'subtask/modified',
       payload: {
@@ -73,7 +73,7 @@ const CreateSubtaskContextProvider = ({ children }: { children: ReactNode }) => 
     });
   };
 
-  const deleteSubtask = (subtask: SubtaskItemInterface) => {
+  const deleteSubtask = (subtask: SubtaskItem) => {
     dispatch({
       type: 'subtask/deleted',
       payload: subtask,

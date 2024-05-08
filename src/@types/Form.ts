@@ -1,13 +1,13 @@
 declare module 'Form' {
-  export interface SubtaskFormItemInterface {
+  export interface SubtaskFormItem {
     title: string;
     details: string;
     difficulty: string;
   }
-  export interface SubtaskFormInterface {
-    [key: string]: SubtaskFormItemInterface[];
+  export interface SubtaskForm {
+    [key: string]: SubtaskFormItem[];
   }
-  export interface TaskFormInterface {
+  export interface TaskForm {
     title: string;
     details: string;
     priority: string;

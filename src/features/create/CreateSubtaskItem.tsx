@@ -5,12 +5,12 @@ import { useState } from 'react';
 import Button from '../../ui/Button';
 import Tag from '../../ui/Tag';
 import { toast } from 'react-toastify';
-import { SubtaskItemInterface } from 'Task';
+import type { SubtaskItem } from 'Task';
 
-const CreateSubtaskItem = ({ subtask }: { subtask: SubtaskItemInterface }) => {
+const CreateSubtaskItem = ({ subtask }: { subtask: SubtaskItem }) => {
   const { deleteSubtask, modifySubtask } = useCreateSubtask();
   const [modifyState, setModifyState] = useState(false);
-  const initialState: SubtaskItemInterface = { ...subtask };
+  const initialState: SubtaskItem = { ...subtask };
   const [form, setForm] = useState(initialState);
   const { id, title, details, difficulty, priority, progress } = form;
   const handleState = (key: string, value: string) => {

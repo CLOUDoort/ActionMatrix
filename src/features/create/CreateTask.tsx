@@ -2,7 +2,7 @@ import AppMain from '../../ui/AppMain';
 import Button from '../../ui/Button';
 import CreateSubtask from './CreateSubtask';
 import Tag from '../../ui/Tag';
-import { TaskFormInterface } from 'Form';
+import type { TaskForm } from 'Form';
 import { nanoid } from 'nanoid';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -10,7 +10,7 @@ import { useCreateSubtask } from './CreateSubtaskContext';
 import { toast } from 'react-toastify';
 import { useCreateTask } from '../../services/apiCreateTask';
 
-const initialFormState: TaskFormInterface = {
+const initialFormState: TaskForm = {
   title: '',
   details: '',
   priority: 'high',

@@ -1,7 +1,7 @@
-import SubtaskItem from './CreateSubtaskItem';
+import CreateSubtaskItem from './CreateSubtaskItem';
 import Tag from '../../ui/Tag';
 import { useCreateSubtask } from './CreateSubtaskContext';
-import { SubtaskItemInterface } from 'Task';
+import type { SubtaskItem } from 'Task';
 
 const CreateSubtaskList = () => {
   const { subtask } = useCreateSubtask();
@@ -13,8 +13,8 @@ const CreateSubtaskList = () => {
           <div className="space-y-5" key={key}>
             <Tag type={key} select={key} />
             <ul className="space-y-1">
-              {subtask[key].map((item: SubtaskItemInterface) => (
-                <SubtaskItem subtask={item} key={item.id} />
+              {subtask[key].map((item: SubtaskItem) => (
+                <CreateSubtaskItem subtask={item} key={item.id} />
               ))}
             </ul>
           </div>
