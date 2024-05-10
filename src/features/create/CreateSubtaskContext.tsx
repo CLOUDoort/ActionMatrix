@@ -31,12 +31,17 @@ const reducer = (state: Subtask, action: ActionInterface): Subtask => {
       };
     }
     case 'subtask/modified': {
+      const { prev, cur } = action.payload;
+      if (prev.difficulty !== cur.difficulty) {
+        return {
+          ...state,
+          [prev.difficulty]: state[prev.difficulty].filter((el) => el.id !== prev.id),
+          [cur.difficulty]: [...state[cur.difficulty], cur], // 새로운 난이도 배열에 추가
+        };
+      }
       return {
         ...state,
-        [action.payload.prev.difficulty]: state[action.payload.prev.difficulty].filter(
-          (el) => el.id !== action.payload.prev.id,
-        ),
-        [action.payload.cur.difficulty]: [...state[action.payload.cur.difficulty], action.payload.cur],
+        [cur.difficulty]: state[cur.difficulty].map((el) => (el.id === cur.id ? cur : el)),
       };
     }
     case 'subtask/deleted': {
