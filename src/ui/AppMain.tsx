@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Tag from './Tag';
 
-const AppMain = ({ children, name }: { children: ReactNode; name: string }) => {
+const AppMain = ({ children, name, style = '' }: { children: ReactNode; name: string; style?: string }) => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const priority = searchParams.get('priority');
@@ -20,7 +20,7 @@ const AppMain = ({ children, name }: { children: ReactNode; name: string }) => {
   };
 
   return (
-    <div className="grid w-full h-full grid-rows-[auto_1fr] gap-3 lg:px-14 px-5 py-10 max-w-7xl">
+    <section className="flex flex-col w-full h-full gap-3 px-5 py-10 lg:px-14 max-w-7xl">
       <div className="flex items-center justify-between h-16 pb-5 lg:text-h3 text-h4 ">
         <div className="flex items-center gap-4">
           <span>{name}</span>
@@ -34,8 +34,8 @@ const AppMain = ({ children, name }: { children: ReactNode; name: string }) => {
           <span>New Task</span>
         </Button>
       </div>
-      <div className="flex flex-col">{children}</div>
-    </div>
+      <div className={`flex-1 h-full ${style}`}>{children}</div>
+    </section>
   );
 };
 

@@ -6,7 +6,7 @@ const AppLayout = () => {
   return (
     <div className="flex w-full h-screen">
       <AppNav />
-      <main className="flex justify-center flex-1">
+      <main className="flex justify-center flex-1 h-full">
         <CreateSubtaskContextProvider>
           <Outlet />
         </CreateSubtaskContextProvider>
