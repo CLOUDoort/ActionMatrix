@@ -3,7 +3,7 @@ import { HiOutlinePlus } from 'react-icons/hi2';
 import { useNavigate } from 'react-router-dom';
 import { HiOutlineFolderPlus } from 'react-icons/hi2';
 
-const NoTasks = () => {
+const NoTasks = ({ type }: { type: string }) => {
   const navigate = useNavigate();
   return (
     <div className="flex items-center justify-center w-full h-full p-10">
@@ -11,7 +11,7 @@ const NoTasks = () => {
         <HiOutlineFolderPlus className="lg:size-20 size-16" />
         <div className="flex flex-col items-center justify-center gap-3">
           <h2 className="text-h4 lg:text-h3 text-Button">No Tasks</h2>
-          <p className="mb-3">There is no pending task</p>
+          <p className="mb-3">There is no {type} task</p>
           <Button type="create" handler={() => navigate('/app/create')}>
             <HiOutlinePlus size={20} />
             <span>New Task</span>
