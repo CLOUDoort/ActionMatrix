@@ -30,7 +30,7 @@ const CreateSubtask = ({ priority, option, flashHandler }: CreateSubtaskProps) =
   const handleState = (key: string, value: string) => {
     setForm((prev) => ({ ...prev, [key]: value }));
   };
-  const clickNewSubtask = () => {
+  const clickDisabledBtn = () => {
     if (option) {
       flashHandler(true);
       setTimeout(() => {
@@ -38,7 +38,9 @@ const CreateSubtask = ({ priority, option, flashHandler }: CreateSubtaskProps) =
       }, 400);
       return;
     }
-    setButtonState((state) => !state);
+  };
+  const clickSubtask = () => {
+    if (!option) setButtonState((state) => !state);
   };
   const reset = () => {
     setButtonState(false);
@@ -67,12 +69,13 @@ const CreateSubtask = ({ priority, option, flashHandler }: CreateSubtaskProps) =
 
   return (
     <div
-      className={`w-full p-8 space-y-5 border rounded-md min-w-96 xl:block border-slate-200 ${option ? 'opacity-60 cursor-not-allowed' : ''}`}
+      className={`flex-1 w-full p-8 space-y-5 border rounded-md min-w-96 xl:block hidden border-slate-200 h-full ${option ? 'opacity-60 cursor-not-allowed' : ''}`}
+      onClick={clickDisabledBtn}
     >
       <h1 className="text-h4">Subtask</h1>
-      <SubtaskList />
+      <SubtaskList option={option} />
       {/* New Subtask Button */}
-      <Button type="subtask" handler={clickNewSubtask} additionalStyle={option ? 'cursor-not-allowed' : ''}>
+      <Button type="subtask" additionalStyle={option ? 'cursor-not-allowed' : ''} handler={clickSubtask}>
         <HiOutlinePlus size={20} />
         <span>New Subtask</span>
       </Button>

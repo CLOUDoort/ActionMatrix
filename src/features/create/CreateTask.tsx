@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useCreateSubtask } from './CreateSubtaskContext';
 import { toast } from 'react-toastify';
-import { useCreateTask } from '../../services/apiCreateTask';
+import { createTask } from '../../services/apiCreateTask';
 
 const initialFormState: TaskForm = {
   title: '',
@@ -38,18 +38,21 @@ const CreateTask = () => {
 
     const baseTask = { id: nanoid(8), title, details, priority, progress: 0 };
     const newTask = option ? { ...baseTask, difficulty } : { ...baseTask, subtask };
-    useCreateTask('todo', newTask);
+    createTask('todo', newTask);
     clearSubtask();
     toast.success('Create Task Success!');
     navigate('/app/todo', { replace: true });
   };
 
   return (
-    <AppMain name="New Task">
-      <div className="xl:grid flex flex-col grid-cols-[auto_1fr] w-full gap-5">
+    <section className="flex flex-col w-full h-full gap-3 px-5 py-10 lg:px-14 max-w-7xl">
+      <div className="flex items-center justify-between h-16 pb-5 lg:text-h3 text-h4 ">
+        <p>New Task</p>
+      </div>
+      <div className={`flex-1 flex h-full gap-5`}>
         <form
           onSubmit={submitHandler}
-          className="w-full p-8 space-y-4 border rounded-md border-slate-200 xl:w-[29rem] min-w-[25rem]"
+          className="w-full p-8 space-y-4 border rounded-md border-slate-200 xl:w-[29rem] min-w-[25rem] h-full"
         >
           <div className="flex flex-col gap-2">
             <label htmlFor="title" className="text-h5">
@@ -117,7 +120,7 @@ const CreateTask = () => {
         </form>
         <CreateSubtask priority={priority} option={option} flashHandler={setFlashBorder} />
       </div>
-    </AppMain>
+    </section>
   );
 };
 

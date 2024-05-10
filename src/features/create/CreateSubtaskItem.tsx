@@ -46,7 +46,7 @@ const CreateSubtaskItem = ({ subtask }: { subtask: SubtaskItem }) => {
   return (
     <>
       {modifyState ? (
-        <form className="w-full p-8 flex flex-col gap-2 border rounded-md border-slate-200 min-w-[25rem]">
+        <form className="flex flex-col w-full gap-2 p-8 border rounded-md border-slate-200">
           <div className="flex flex-col gap-2">
             <input
               type="text"
