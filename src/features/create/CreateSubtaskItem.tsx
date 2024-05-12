@@ -1,11 +1,11 @@
+import Button from '../../ui/Button';
 import { LuDot } from 'react-icons/lu';
+import type { SubtaskItem } from 'Task';
+import Tag from '../../ui/Tag';
 import { TiDelete } from 'react-icons/ti';
+import { toast } from 'react-toastify';
 import { useCreateSubtask } from './CreateSubtaskContext';
 import { useState } from 'react';
-import Button from '../../ui/Button';
-import Tag from '../../ui/Tag';
-import { toast } from 'react-toastify';
-import type { SubtaskItem } from 'Task';
 
 const CreateSubtaskItem = ({ subtask }: { subtask: SubtaskItem }) => {
   const { deleteSubtask, modifySubtask } = useCreateSubtask();

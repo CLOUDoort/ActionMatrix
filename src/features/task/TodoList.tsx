@@ -1,4 +1,4 @@
-import { LoaderFunction, useFetcher, useLoaderData } from 'react-router-dom';
+import { LoaderFunction, useLoaderData } from 'react-router-dom';
 import { getTasks } from '../../services/apiTasks';
 import AppMain from '../../ui/AppMain';
 import Label from '../../ui/Label';
@@ -15,7 +15,7 @@ const TodoList = () => {
       {todo.length === 0 ? (
         <NoTasks type="Todo" />
       ) : (
-        <div className="flex flex-col w-full h-full">
+        <div className="flex flex-col w-full ">
           {todo.map((task: Task) => (
             <TaskItem task={task} key={task.id} />
           ))}

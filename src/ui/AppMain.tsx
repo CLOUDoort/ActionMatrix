@@ -34,7 +34,7 @@ const AppMain = ({ children, name, style = '' }: { children: ReactNode; name: st
           <span>New Task</span>
         </Button>
       </div>
-      <div className={`flex-1 h-full ${style}`}>{children}</div>
+      <div className={`flex-1 h-full w-full ${style}`}>{children}</div>
     </section>
   );
 };

@@ -15,9 +15,8 @@ const Home = () => {
             Prioritize Your Work Like <br /> Never Before!
           </h1>
           <h3 className="text-h5 lg:text-h4">
-            start with something that's really{' '}
-            <span className="text-High1">important</span> but{' '}
-            <span className="text-Low1">easy</span> task.
+            start with something that's really <span className="text-High">important</span> but{' '}
+            <span className="text-Low">easy</span> task.
           </h3>
         </div>
         <div className="space-x-6">
