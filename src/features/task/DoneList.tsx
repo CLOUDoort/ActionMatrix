@@ -1,20 +1,21 @@
 import { LoaderFunction, useLoaderData } from 'react-router-dom';
-import { getTasks } from '../../services/apiTasks';
+
 import AppMain from '../../ui/AppMain';
 import Label from '../../ui/Label';
 import NoTasks from '../../ui/NoTasks';
 import { Task } from 'Task';
 import TaskItem from './TaskItem';
+import { getTasks } from '../../services/apiTasks';
 
 const DoneList = () => {
   const done: any = useLoaderData();
   return (
-    <AppMain name="Tasks / Todo">
+    <AppMain name="Tasks / Done">
       <Label />
       {done.length === 0 ? (
         <NoTasks type="Done" />
       ) : (
-        <div className="flex flex-col">
+        <div className="flex flex-col w-full h-full">
           {done.map((task: Task) => (
             <TaskItem task={task} key={task.id} />
           ))}

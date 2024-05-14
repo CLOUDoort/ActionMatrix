@@ -6,7 +6,7 @@ import { HiOutlineFolderPlus } from 'react-icons/hi2';
 const NoTasks = ({ type }: { type: string }) => {
   const navigate = useNavigate();
   return (
-    <div className="flex items-center justify-center w-full h-full p-10">
+    <div className="flex items-center justify-center h-full p-10">
       <div className="flex flex-col items-center justify-center w-56 gap-5">
         <HiOutlineFolderPlus className="lg:size-20 size-16" />
         <div className="flex flex-col items-center justify-center gap-3">
