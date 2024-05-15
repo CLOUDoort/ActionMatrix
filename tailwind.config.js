@@ -16,6 +16,9 @@ module.exports = {
       },
     },
     extend: {
+      transitionProperty: {
+        width: 'width',
+      },
       height: {
         screen: '100dvh',
       },
