@@ -4,7 +4,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col items-center justify-between w-full h-screen bg-gradient-to-r from-HomeFrom to-HomeTo">
+    <div className="flex flex-col items-center justify-between w-full h-screen overflow-hidden bg-gradient-to-r from-HomeFrom to-HomeTo">
       <header className="flex items-center w-full gap-3 ml-12 h-28">
         <img src="/Logo.png" alt="Logo" className="size-7 lg:size-10" />
         <h4 className="text-h5 lg:text-h4">ActionMatrix</h4>

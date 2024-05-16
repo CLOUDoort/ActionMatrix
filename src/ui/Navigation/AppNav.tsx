@@ -31,7 +31,7 @@ const AppNav = () => {
 
       {/* 1024px 미만에서 nav 조작 */}
       {sm && (
-        <div className="absolute inset-0 bg-black/20" onClick={() => handleNavState('sm')}>
+        <div className="absolute inset-0 z-50 bg-black/20" onClick={() => handleNavState('sm')}>
           <aside onClick={(e) => e.stopPropagation()} className={`w-60 ${baseNavStyle}`}>
             <AppNavList handler={() => handleNavState('sm')} />
           </aside>
