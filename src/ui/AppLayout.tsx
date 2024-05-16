@@ -1,5 +1,4 @@
 import AppNav from './Navigation/AppNav';
-import { CreateSubtaskContextProvider } from '../features/create/CreateSubtaskContext';
 import { Outlet } from 'react-router-dom';
 
 const AppLayout = () => {
@@ -7,9 +6,7 @@ const AppLayout = () => {
     <div className="flex w-full h-screen">
       <AppNav />
       <main className="flex justify-center flex-1 h-full overflow-y-scroll">
-        <CreateSubtaskContextProvider>
-          <Outlet />
-        </CreateSubtaskContextProvider>
+        <Outlet />
       </main>
     </div>
   );

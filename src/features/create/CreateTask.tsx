@@ -1,14 +1,13 @@
-import AppMain from '../../ui/AppMain';
 import Button from '../../ui/Button';
 import CreateSubtask from './CreateSubtask';
 import Tag from '../../ui/Tag';
 import type { TaskForm } from 'Form';
-import { nanoid } from 'nanoid';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { useCreateSubtask } from './CreateSubtaskContext';
-import { toast } from 'react-toastify';
 import { createTask } from '../../services/apiCreateTask';
+import { nanoid } from 'nanoid';
+import { toast } from 'react-toastify';
+import { useCreateSubtask } from './CreateSubtaskContext';
+import { Form, redirect, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const initialFormState: TaskForm = {
   title: '',
@@ -23,35 +22,20 @@ const CreateTask = () => {
   const [flashBorder, setFlashBorder] = useState(false);
   const [state, setState] = useState(initialFormState);
   const { title, details, priority, option, difficulty } = state;
-  const { subtask, clearSubtask } = useCreateSubtask();
+  const { subtask } = useCreateSubtask();
 
   const handleState = (key: string, value: string | boolean) => {
     setState((prev) => ({ ...prev, [key]: value }));
   };
 
-  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!title || !details) {
-      toast.error('Not enough content!');
-      return;
-    }
-
-    const baseTask = { id: nanoid(8), title, details, priority, progress: 0 };
-    const newTask = option ? { ...baseTask, difficulty } : { ...baseTask, subtask };
-    createTask('todo', newTask);
-    clearSubtask();
-    toast.success('Create Task Success!');
-    navigate('/app/todo', { replace: true });
-  };
-
   return (
-    <section className="flex flex-col w-full h-full gap-3 px-5 py-10 lg:px-14 max-w-7xl">
+    <section className="flex flex-col w-full max-h-[50rem] gap-3 px-5 py-9 lg:px-14 max-w-7xl">
       <div className="flex items-center justify-between h-16 pb-5 lg:text-h3 text-h4 ">
         <p>New Task</p>
       </div>
-      <div className={`flex-1 flex h-full gap-5`}>
-        <form
-          onSubmit={submitHandler}
+      <div className={`flex-1 flex gap-5 pb-10`}>
+        <Form
+          method="POST"
           className="w-full p-8 space-y-4 border rounded-md border-slate-200 xl:w-[29rem] min-w-[25rem] h-full"
         >
           <div className="flex flex-col gap-2">
@@ -61,6 +45,7 @@ const CreateTask = () => {
             <input
               type="text"
               id="title"
+              name="title"
               className="p-2 border-2 rounded-md border-slate-200"
               placeholder="Title"
               value={title}
@@ -73,6 +58,7 @@ const CreateTask = () => {
             </label>
             <textarea
               id="details"
+              name="details"
               className="p-2 border-2 rounded-md border-slate-200 min-h-20"
               placeholder="Details"
               value={details}
@@ -96,7 +82,7 @@ const CreateTask = () => {
               <Button
                 type={`option${!option}`}
                 handler={() => handleState('option', false)}
-                additionalStyle={`${flashBorder ? 'border-red-900 bg-red-200' : ''}`}
+                conditionStyle={`${flashBorder ? 'border-red-400 bg-red-300' : ''}`}
               >
                 Subtask
               </Button>
@@ -113,15 +99,58 @@ const CreateTask = () => {
             <Button type="cancel" handler={() => navigate(-1)}>
               Cancel
             </Button>
-            <Button type="save" submit={true} handler={submitHandler}>
+            <Button type="save" submit={true}>
               Save
             </Button>
           </div>
-        </form>
+
+          {/* input을 통해 data 전달 */}
+          <input
+            type="hidden"
+            name={option ? 'difficulty' : 'subtask'}
+            value={option ? difficulty : JSON.stringify(subtask)}
+          />
+          <input type="hidden" name="priority" value={priority} />
+          <input type="hidden" name="option" value={JSON.stringify(option)} />
+        </Form>
         <CreateSubtask priority={priority} option={option} flashHandler={setFlashBorder} />
       </div>
     </section>
   );
 };
+
+export const action =
+  ({ clearSubtask }: { clearSubtask: () => void }) =>
+  async ({ request }: { request: any }) => {
+    const formData = await request.formData();
+    const data = Object.fromEntries(formData);
+    const { title, details, priority, option } = data;
+
+    if (!title || !details) {
+      toast.error('Not enough content!');
+      return null;
+    }
+
+    const taskId = nanoid(9);
+    const base = { id: taskId, title, details, priority, progress: 0 };
+
+    let task;
+    if (option === 'true') task = { ...base, difficulty: data.difficulty };
+    else {
+      const subtask = JSON.parse(String(data.subtask));
+      const subtaskNum = Object.keys(subtask).reduce((acc, cur) => acc + subtask[cur].length, 0);
+      Object.keys(subtask)
+        .filter((el) => el.length !== 0)
+        .map((key) => {
+          return { ...[subtask[key]], [taskId]: taskId };
+        });
+      task = { ...base, subtask, subtaskNum, completedSubtaskNum: 0 };
+    }
+
+    createTask('todo', task);
+    clearSubtask();
+    toast.success('Create Task Success!');
+    return redirect('/app/todo');
+  };
 
 export default CreateTask;
