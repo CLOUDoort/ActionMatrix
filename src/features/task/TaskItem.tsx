@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
-import type { SubtaskItem, Task } from 'Task';
-
-import { Progress } from '@/components/ui/progress';
+import type { Task } from 'Task';
 import Tag from '../../ui/Tag';
-import TaskDetails from './details/TaskDetails';
+import { Progress } from '@/components/ui/progress';
+import React, { useState } from 'react';
 import { TiDelete } from 'react-icons/ti';
 import { deleteTask } from '@/services/apiTasks';
-import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import TaskDetails from './details/TaskDetails';
 
 const TaskItem = ({ type, task }: { type: string; task: Task }) => {
   const { title, progress, priority, difficulty, subtask } = task;
@@ -44,14 +43,11 @@ const TaskItem = ({ type, task }: { type: string; task: Task }) => {
               {Object.entries(subtask)
                 .filter(([_, value]) => value.length !== 0)
                 .map(([key, value]: any) => {
-                  const remainTask = type === 'todo' ? value.filter((el: SubtaskItem) => !el.complete) : value;
-                  if (remainTask.length > 0) {
-                    return (
-                      <React.Fragment key={key}>
-                        <Tag type={key} button={false} /> x {remainTask.length}
-                      </React.Fragment>
-                    );
-                  }
+                  return (
+                    <React.Fragment key={key}>
+                      <Tag type={key} button={false} /> x {value.length}
+                    </React.Fragment>
+                  );
                 })}
             </div>
           )}
