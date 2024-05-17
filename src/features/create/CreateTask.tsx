@@ -85,7 +85,7 @@ const CreateTask = () => {
                 handler={() => handleState('option', false)}
                 conditionStyle={`${flashBorder ? 'border-red-400 bg-red-300' : ''}`}
               >
-                Subtask
+                Divide
               </Button>
             </div>
             {option && (
