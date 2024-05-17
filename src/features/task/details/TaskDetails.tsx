@@ -1,15 +1,15 @@
-import type { Task, SubtaskItem, Focus } from 'Task';
+import type { Focus, SubtaskItem, Task } from 'Task';
+import { finishSubtask, finishTask } from '@/services/apiTasks';
 
 import Button from '@/ui/Button';
+import FocusTask from '../../focus/FocusTask';
 import { HiOutlineXMark } from 'react-icons/hi2';
 import { Progress } from '@/components/ui/progress';
 import Tag from '@/ui/Tag';
 import TaskDetailsSubtaskItem from './TaskDetailsSubtaskItem';
-import { useState } from 'react';
-import FocusTask from '../focus/FocusTask';
-import { finishSubtask, finishTask } from '@/services/apiTasks';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const initialState = {
   type: '',

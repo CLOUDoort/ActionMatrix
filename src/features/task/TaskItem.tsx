@@ -1,12 +1,13 @@
-import type { SubtaskItem, Task } from 'Task';
-import Tag from '../../ui/Tag';
-import { Progress } from '@/components/ui/progress';
 import React, { useState } from 'react';
+import type { SubtaskItem, Task } from 'Task';
+
+import { Progress } from '@/components/ui/progress';
+import Tag from '../../ui/Tag';
+import TaskDetails from './details/TaskDetails';
 import { TiDelete } from 'react-icons/ti';
 import { deleteTask } from '@/services/apiTasks';
-import { useNavigate } from 'react-router-dom';
-import TaskDetails from '../details/TaskDetails';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const TaskItem = ({ type, task }: { type: string; task: Task }) => {
   const { title, progress, priority, difficulty, subtask } = task;
