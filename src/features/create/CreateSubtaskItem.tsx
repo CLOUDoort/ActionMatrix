@@ -10,16 +10,20 @@ import { useState } from 'react';
 const CreateSubtaskItem = ({ subtask }: { subtask: SubtaskItem }) => {
   const { deleteSubtask, modifySubtask } = useCreateSubtask();
   const [modifyState, setModifyState] = useState(false);
-  const initialState: SubtaskItem = { ...subtask };
-  const [form, setForm] = useState(initialState);
-  const { id, title, details, difficulty, priority, progress } = form;
+
+  const prevSubtask: SubtaskItem = { ...subtask };
+  const [form, setForm] = useState(prevSubtask);
+  const { title, details, difficulty } = form;
+
   const handleState = (key: string, value: string) => {
     setForm((prev) => ({ ...prev, [key]: value }));
   };
+
   const reset = () => {
     setModifyState(false);
-    setForm(initialState);
+    setForm(prevSubtask);
   };
+
   const submitHandler = () => {
     if (!title || !details) {
       toast.error('Not enough content!');
@@ -32,12 +36,10 @@ const CreateSubtaskItem = ({ subtask }: { subtask: SubtaskItem }) => {
       return;
     }
     const modifiedSubtask = {
-      id,
+      ...prevSubtask,
       title,
       details,
       difficulty,
-      priority,
-      progress,
     };
     modifySubtask(subtask, modifiedSubtask);
     toast.success('Modify Success!');

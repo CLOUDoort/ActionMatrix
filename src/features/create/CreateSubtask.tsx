@@ -2,12 +2,12 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import Button from '../../ui/Button';
 import { HiOutlinePlus } from 'react-icons/hi';
+import type { SubtaskFormItem } from 'Form';
 import SubtaskList from './CreateSubtaskList';
 import Tag from '../../ui/Tag';
 import { nanoid } from 'nanoid';
-import { useCreateSubtask } from './CreateSubtaskContext';
 import { toast } from 'react-toastify';
-import type { SubtaskFormItem } from 'Form';
+import { useCreateSubtask } from './CreateSubtaskContext';
 
 interface CreateSubtaskProps {
   priority: string;
@@ -30,6 +30,7 @@ const CreateSubtask = ({ priority, option, flashHandler }: CreateSubtaskProps) =
   const handleState = (key: string, value: string) => {
     setForm((prev) => ({ ...prev, [key]: value }));
   };
+
   const clickDisabledBtn = () => {
     if (option) {
       flashHandler(true);
@@ -39,9 +40,11 @@ const CreateSubtask = ({ priority, option, flashHandler }: CreateSubtaskProps) =
       return;
     }
   };
+
   const clickSubtask = () => {
     if (!option) setButtonState((state) => !state);
   };
+
   const reset = () => {
     setButtonState(false);
     setForm(initialFormState);
@@ -59,7 +62,8 @@ const CreateSubtask = ({ priority, option, flashHandler }: CreateSubtaskProps) =
       details,
       difficulty,
       priority,
-      progress: 0,
+      complete: false,
+      taskId: '',
     });
     toast.success('Create Subtask Success!');
     reset();
@@ -69,13 +73,14 @@ const CreateSubtask = ({ priority, option, flashHandler }: CreateSubtaskProps) =
 
   return (
     <div
-      className={`flex-1 w-full p-8 space-y-5 border rounded-md min-w-96 xl:block hidden border-slate-200 h-full ${option ? 'opacity-60 cursor-not-allowed' : ''}`}
+      className={`flex-1 w-full p-8 space-y-5 border rounded-md min-w-96 min-h-[32.625rem] border-slate-200 h-full ${option ? 'opacity-60 cursor-not-allowed' : ''} overflow-y-scroll`}
       onClick={clickDisabledBtn}
     >
       <h1 className="text-h4">Subtask</h1>
       <SubtaskList option={option} />
+
       {/* New Subtask Button */}
-      <Button type="subtask" additionalStyle={option ? 'cursor-not-allowed' : ''} handler={clickSubtask}>
+      <Button type="subtask" conditionStyle={option ? 'cursor-not-allowed' : ''} handler={clickSubtask}>
         <HiOutlinePlus size={20} />
         <span>New Subtask</span>
       </Button>

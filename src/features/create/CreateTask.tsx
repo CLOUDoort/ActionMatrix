@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { useCreateSubtask } from './CreateSubtaskContext';
 import { Form, redirect, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { SubtaskItem } from 'Task';
 
 const initialFormState: TaskForm = {
   title: '',
@@ -33,7 +34,7 @@ const CreateTask = () => {
       <div className="flex items-center justify-between h-16 pb-5 lg:text-h3 text-h4 ">
         <p>New Task</p>
       </div>
-      <div className={`flex-1 flex gap-5 pb-10`}>
+      <div className={`flex-1 flex flex-col xl:flex-row gap-5 pb-10`}>
         <Form
           method="POST"
           className="w-full p-8 space-y-4 border rounded-md border-slate-200 xl:w-[29rem] min-w-[25rem] h-full"
@@ -131,22 +132,24 @@ export const action =
       return null;
     }
 
-    const taskId = nanoid(9);
+    const taskId = nanoid(8);
     const base = { id: taskId, title, details, priority, progress: 0 };
 
     let task;
     if (option === 'true') task = { ...base, difficulty: data.difficulty };
     else {
-      const subtask = JSON.parse(String(data.subtask));
-      const subtaskNum = Object.keys(subtask).reduce((acc, cur) => acc + subtask[cur].length, 0);
-      Object.keys(subtask)
-        .filter((el) => el.length !== 0)
-        .map((key) => {
-          return { ...[subtask[key]], [taskId]: taskId };
+      const temp = JSON.parse(String(data.subtask));
+      const subtaskNum = Object.keys(temp).reduce((acc, cur) => acc + temp[cur].length, 0);
+      Object.keys(temp)
+        .filter((el) => temp[el].length !== 0)
+        .forEach((key) => {
+          temp[key] = temp[key].map((item: SubtaskItem) => {
+            return { ...item, taskId };
+          });
         });
-      task = { ...base, subtask, subtaskNum, completedSubtaskNum: 0 };
-    }
 
+      task = { ...base, subtask: temp, subtaskNum, completedSubtaskNum: 0 };
+    }
     createTask('todo', task);
     clearSubtask();
     toast.success('Create Task Success!');
