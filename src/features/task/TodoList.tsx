@@ -18,7 +18,7 @@ const TodoList = () => {
       ) : (
         <div className="flex flex-col w-full h-full mb-10">
           {todo.map((task: Task) => (
-            <TaskItem task={task} key={task.id} />
+            <TaskItem type="todo" task={task} key={task.id} />
           ))}
         </div>
       )}

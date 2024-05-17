@@ -17,7 +17,7 @@ const DoneList = () => {
       ) : (
         <div className="flex flex-col w-full h-full">
           {done.map((task: Task) => (
-            <TaskItem task={task} key={task.id} />
+            <TaskItem type="done" task={task} key={task.id} />
           ))}
         </div>
       )}

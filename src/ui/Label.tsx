@@ -1,17 +1,10 @@
-const Label = ({ type }: { type: string }) => {
-  const base = ['Title', 'Progress', 'Priority'];
-  const items: { [key: string]: string[] } = {
-    default: [...base, 'Difficulty / Subtask'],
-    filter: [...base, 'Difficulty'],
-    detail: base,
-  };
+const Label = () => {
   return (
-    <div className="flex w-full text-sm border-b-2 h-11 whitespace-nowrap lg:text-h5 border-slate-200">
-      {items[type].map((item: string) => (
-        <div key={item} className="w-24 lg:w-52">
-          {item}
-        </div>
-      ))}
+    <div className="w-full text-base border-b-2 min-h-11 whitespace-nowrap md:text-h5 flex border-slate-200 min-w-[20rem]">
+      <span className={`w-28 sm:w-40 md:w-48`}>Title</span>
+      <span className={`w-28 sm:w-40 md:w-48`}>Progress</span>
+      <span className={`w-28 sm:w-40 md:w-48`}>Priority</span>
+      <span className={`hidden xl:block`}>Difficulty / Subtask</span>
     </div>
   );
 };
