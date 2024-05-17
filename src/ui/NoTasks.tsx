@@ -12,10 +12,12 @@ const NoTasks = ({ type }: { type: string }) => {
         <div className="flex flex-col items-center justify-center gap-3">
           <h2 className="text-h4 lg:text-h3 text-Button">No Tasks</h2>
           <p className="mb-3">There is no {type} task</p>
-          <Button type="create" handler={() => navigate('/app/create')}>
-            <HiOutlinePlus size={20} />
-            <span>New Task</span>
-          </Button>
+          {type === 'Todo' && (
+            <Button type="create" handler={() => navigate('/app/create')}>
+              <HiOutlinePlus size={20} />
+              <span>New Task</span>
+            </Button>
+          )}
         </div>
       </div>
     </div>
