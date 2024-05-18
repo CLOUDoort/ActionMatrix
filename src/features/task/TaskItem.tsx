@@ -34,7 +34,7 @@ const TaskItem = ({ type, task }: { type: string; task: Task }) => {
             <Tag type={priority} button={false} />
           </div>
           {difficulty && (
-            <div className="hidden xl:w-48">
+            <div className="hidden xl:w-48 xl:block">
               <Tag type={difficulty} button={false} />
             </div>
           )}
