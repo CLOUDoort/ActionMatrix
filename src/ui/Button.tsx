@@ -16,7 +16,7 @@ const styles: { [key: string]: string } = {
     base + ' border justify-center bg-slate-100 border-slate-300 hover:bg-slate-200 active:bg-slate-300 text-slate-500',
   edit:
     base +
-    ' w-full border justify-center bg-slate-100 border-slate-300 hover:bg-slate-200 active:bg-slate-300 text-slate-600',
+    ' w-full border justify-center bg-slate-100 border-slate-300 hover:bg-slate-200 active:bg-slate-300 text-slate-500',
 };
 
 type PropsType = {
