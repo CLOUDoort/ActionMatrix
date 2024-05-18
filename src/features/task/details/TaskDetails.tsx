@@ -120,7 +120,9 @@ const TaskDetails = ({ task, handleDetailState }: TaskDetailsProps) => {
           )}
         </div>
         <div className="flex items-center w-full gap-2 px-8">
-          <Button type="edit">Edit</Button>
+          <Button type="edit" handler={() => navigate(`/app/edit/${id}`)}>
+            Edit
+          </Button>
           {difficulty && (
             <Button type="focus" handler={() => focusHandler('task', focusTask)} conditionStyle="w-full">
               Focus

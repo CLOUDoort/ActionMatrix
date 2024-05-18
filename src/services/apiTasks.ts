@@ -1,5 +1,11 @@
 import type { Focus, SubtaskItem, Task } from 'Task';
 
+export const getTask = (id: string) => {
+  let todo = getTasks('todo', null, null);
+
+  return todo.find((item: Task) => item.id === id);
+};
+
 export const getTasks = (type: string, priority: string | null, difficulty: string | null) => {
   let task = localStorage.getItem(type);
   if (task === null) return [];
@@ -58,7 +64,6 @@ export const finishSubtask = (focus: Focus) => {
 
   // subtask 수정하고 subtask의 task에 반영
   const targetTask = todo.find((el: Task) => el.id === focus.taskId);
-  console.log(focus);
   const subtask = targetTask.subtask[focus.difficulty].find((el: SubtaskItem) => el.id === focus.id);
   subtask.complete = true;
 
@@ -87,4 +92,21 @@ export const finishSubtask = (focus: Focus) => {
   localStorage.setItem('todo', JSON.stringify(todo));
   localStorage.setItem('done', JSON.stringify(done));
   return flag;
+};
+
+export const editTask = (task: Task) => {
+  let todo = getTasks('todo', null, null);
+  let done = getTasks('done', null, null);
+
+  if (task.progress === 100) {
+    done = [...done, task];
+    todo = todo.filter((el: Task) => el.id !== task.id);
+    localStorage.setItem('done', JSON.stringify(done));
+    localStorage.setItem('todo', JSON.stringify(todo));
+    return 'done';
+  } else {
+    todo = todo.map((el: Task) => (el.id === task.id ? task : el));
+    localStorage.setItem('todo', JSON.stringify(todo));
+    return 'todo';
+  }
 };

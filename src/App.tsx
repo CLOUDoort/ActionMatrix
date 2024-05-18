@@ -1,11 +1,13 @@
+import DoneList, { loader as doneLoader } from './features/task/DoneList';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import TodoList, { loader as todoLoader } from './features/task/TodoList';
+import { action as editAction, loader as editLoader } from './features/edit/EditTask';
 
 import AppLayout from './ui/AppLayout';
-import Home from './ui/Home';
-import TodoList, { loader as todoLoader } from './features/task/TodoList';
-import DoneList, { loader as doneLoader } from './features/task/DoneList';
-import { action as createAction } from './features/create/CreateTask';
 import CreateTask from './features/create/CreateTask';
+import EditTask from './features/edit/EditTask';
+import Home from './ui/Home';
+import { action as createAction } from './features/create/CreateTask';
 import { useCreateSubtask } from './features/create/CreateSubtaskContext';
 
 const App = () => {
@@ -46,6 +48,12 @@ const App = () => {
           path: '/app/create',
           element: <CreateTask />,
           action: createAction({ clearSubtask }),
+        },
+        {
+          path: '/app/edit/:id',
+          element: <EditTask />,
+          loader: editLoader,
+          action: editAction,
         },
       ],
     },
