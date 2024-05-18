@@ -1,14 +1,16 @@
+import { Form, redirect, useNavigate } from 'react-router-dom';
+
 import Button from '../../ui/Button';
 import CreateSubtask from './CreateSubtask';
+import { SubtaskItem } from 'Task';
 import Tag from '../../ui/Tag';
 import type { TaskForm } from 'Form';
 import { createTask } from '../../services/apiCreateTask';
 import { nanoid } from 'nanoid';
 import { toast } from 'react-toastify';
 import { useCreateSubtask } from './CreateSubtaskContext';
-import { Form, redirect, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { SubtaskItem } from 'Task';
+import FormLabel from '@/ui/FormLabel';
 
 const initialFormState: TaskForm = {
   title: '',
@@ -39,10 +41,7 @@ const CreateTask = () => {
           method="POST"
           className="w-full p-8 space-y-4 border rounded-md border-slate-200 xl:w-[29rem] min-w-[25rem] h-full"
         >
-          <div className="flex flex-col gap-2">
-            <label htmlFor="title" className="text-h5">
-              Title
-            </label>
+          <FormLabel name="Title">
             <input
               type="text"
               id="title"
@@ -52,11 +51,8 @@ const CreateTask = () => {
               value={title}
               onChange={(e) => handleState('title', e.target.value)}
             />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="details" className="text-h5">
-              Details
-            </label>
+          </FormLabel>
+          <FormLabel name="Details">
             <textarea
               id="details"
               name="details"
@@ -65,17 +61,15 @@ const CreateTask = () => {
               value={details}
               onChange={(e) => handleState('details', e.target.value)}
             />
-          </div>
-          <div className="flex flex-col gap-2">
-            <div className="text-h5">Priority</div>
+          </FormLabel>
+          <FormLabel name="Priority">
             <div className="flex gap-2">
               <Tag type="high" select={priority} handler={() => handleState('priority', 'high')} />
               <Tag type="medium" select={priority} handler={() => handleState('priority', 'medium')} />
               <Tag type="low" select={priority} handler={() => handleState('priority', 'low')} />
             </div>
-          </div>
-          <div className="flex flex-col gap-2">
-            <div className="text-h5">Options</div>
+          </FormLabel>
+          <FormLabel name="Options">
             <div className="flex gap-2">
               <Button type={`option${option}`} handler={() => handleState('option', true)}>
                 Difficulty
@@ -95,7 +89,7 @@ const CreateTask = () => {
                 <Tag type="easy" select={difficulty} handler={() => handleState('difficulty', 'easy')} />
               </div>
             )}
-          </div>
+          </FormLabel>
           <div className="flex justify-end gap-2">
             <Button type="cancel" handler={() => navigate(-1)}>
               Cancel
@@ -152,7 +146,7 @@ export const action =
     }
     createTask('todo', task);
     clearSubtask();
-    toast.success('Create Task Success!');
+    toast.success('Create Task!');
     return redirect('/app/todo');
   };
 
