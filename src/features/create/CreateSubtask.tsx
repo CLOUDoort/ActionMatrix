@@ -1,9 +1,9 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import Button from '../../ui/Button';
+import CreateSubtaskList from './CreateSubtaskList';
 import { HiOutlinePlus } from 'react-icons/hi';
 import type { SubtaskFormItem } from 'Form';
-import SubtaskList from './CreateSubtaskList';
 import Tag from '../../ui/Tag';
 import { nanoid } from 'nanoid';
 import { toast } from 'react-toastify';
@@ -65,7 +65,6 @@ const CreateSubtask = ({ priority, option, flashHandler }: CreateSubtaskProps) =
       complete: false,
       taskId: '',
     });
-    toast.success('Create Subtask Success!');
     reset();
   };
 
@@ -77,7 +76,7 @@ const CreateSubtask = ({ priority, option, flashHandler }: CreateSubtaskProps) =
       onClick={clickDisabledBtn}
     >
       <h1 className="text-h4">Subtask</h1>
-      <SubtaskList option={option} />
+      <CreateSubtaskList option={option} />
 
       {/* New Subtask Button */}
       <Button type="subtask" conditionStyle={option ? 'cursor-not-allowed' : ''} handler={clickSubtask}>

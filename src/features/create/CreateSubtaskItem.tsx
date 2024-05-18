@@ -42,7 +42,6 @@ const CreateSubtaskItem = ({ subtask }: { subtask: SubtaskItem }) => {
       difficulty,
     };
     modifySubtask(subtask, modifiedSubtask);
-    toast.success('Modify Success!');
     reset();
   };
   return (
