@@ -21,11 +21,11 @@ const AppMain = ({ children, name }: { children: ReactNode; name: string }) => {
   };
 
   return (
-    <section className="flex flex-col w-full h-full gap-3 px-5 py-10 lg:px-14 max-w-7xl">
-      <div className="flex items-center justify-between h-16 pb-5 lg:text-h3 text-h4">
-        <div className="flex items-center gap-4">
-          <span>{name}</span>
-          <span className="space-x-2 text-sm">
+    <section className="flex flex-col w-full h-full gap-3 px-5 py-10 lg:px-14 max-w-7xl min-w-[20rem]">
+      <div className="flex items-center justify-between h-16 pb-5 lg:text-h3 sm:text-h4 text-h5">
+        <div className="flex items-center gap-4 whitespace-nowrap">
+          <span className="">{name}</span>
+          <span className="flex flex-col justify-center gap-2 px-2 text-sm sm:flex-col">
             {priority && <Tag type={priority} handler={priorityHandler} />}
             {difficulty && <Tag type={difficulty} handler={difficultyHandler} />}
           </span>

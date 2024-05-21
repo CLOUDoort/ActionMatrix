@@ -4,12 +4,12 @@ const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col items-center justify-between w-full h-screen overflow-hidden bg-gradient-to-r from-HomeFrom to-HomeTo">
-      <header className="flex items-center w-full gap-3 ml-12 h-28">
+    <div className="flex flex-col items-center justify-between w-full h-screen p-5 overflow-hidden bg-gradient-to-r from-HomeFrom to-HomeTo">
+      <header className="flex items-center w-full gap-3 ml-20 h-28 min-w-[12.5rem]">
         <img src="/Logo.png" alt="Logo" className="size-7 lg:size-10" />
         <h4 className="text-h5 lg:text-h4">ActionMatrix</h4>
       </header>
-      <main className="flex flex-col items-center justify-center h-full gap-20 mb-16 text-center">
+      <main className="flex flex-col min-w-[25rem] items-center justify-center h-full gap-20 mb-16 text-center">
         <div className="space-y-3 tracking-wider">
           <h1 className="text-h3 lg:text-h2">
             Prioritize Your Work Like <br /> Never Before!

@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 
-const base = 'flex items-center gap-2 px-3 text-base py-2 min-w-[5rem] rounded transition-all';
+const base =
+  'flex items-center gap-2 text-xs px-3 sm:text-base whitespace-nowrap py-2 sm:min-w-[5rem] rounded transition-all';
 const indigoButton = base + ' text-white justify-center bg-Indigo hover:bg-IndigoHover active:bg-IndigoActive';
 
 const styles: { [key: string]: string } = {

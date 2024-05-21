@@ -1,6 +1,6 @@
 import { ucFirst } from '../utils/ucFirst';
 
-const base = 'px-3 py-2 rounded border-2 rounded-md transition-all ';
+const base = 'sm:px-3 sm:py-2 px-1 py-1 rounded border-2 rounded-md transition-all ';
 
 const style: { [key: string]: string } = {
   high: base + 'bg-High',
