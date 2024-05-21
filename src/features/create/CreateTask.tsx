@@ -134,6 +134,10 @@ export const action =
     else {
       const temp = JSON.parse(String(data.subtask));
       const subtaskNum = Object.keys(temp).reduce((acc, cur) => acc + temp[cur].length, 0);
+      if (subtaskNum === 0) {
+        toast.error('Add subtask!');
+        return null;
+      }
       Object.keys(temp)
         .filter((el) => temp[el].length !== 0)
         .forEach((key) => {
