@@ -6,7 +6,7 @@ import App from './App.tsx';
 import { CreateSubtaskContextProvider } from './features/create/CreateSubtaskContext.tsx';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { SpeedInsights } from '@vercel/speed-insights/next';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { ToastContainer } from 'react-toastify';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
