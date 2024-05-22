@@ -1,9 +1,9 @@
 import type { Focus, SubtaskItem, Task } from 'Task';
 
-export const getTask = (id: string) => {
-  let todo = getTasks('todo', null, null);
+export const getTask = (type: string, id: string) => {
+  let taskList = getTasks(type, null, null);
 
-  return todo.find((item: Task) => item.id === id);
+  return taskList.find((item: Task) => item.id === id);
 };
 
 export const getTasks = (type: string, priority: string | null, difficulty: string | null) => {
@@ -99,7 +99,10 @@ export const editTask = (task: Task) => {
   let done = getTasks('done', null, null);
 
   if (task.progress === 100) {
-    done = [...done, task];
+    // 기존의 task가 done일 경우에는 done의 task를 새로운 task로 교체
+    done = done.map((el: Task) => (el.id === task.id ? task : el));
+
+    // 기존의 task가 todo일 경우에는 todo에서 삭제
     todo = todo.filter((el: Task) => el.id !== task.id);
     localStorage.setItem('done', JSON.stringify(done));
     localStorage.setItem('todo', JSON.stringify(todo));

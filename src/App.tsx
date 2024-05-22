@@ -50,7 +50,7 @@ const App = () => {
           action: createAction({ clearSubtask }),
         },
         {
-          path: '/app/edit/:id',
+          path: '/app/edit/:type/:id',
           element: <EditTask />,
           loader: editLoader,
           action: editAction,

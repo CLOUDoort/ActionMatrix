@@ -1,14 +1,14 @@
 import { Form, LoaderFunction, redirect, useLoaderData, useNavigate } from 'react-router-dom';
+import { editTask, getTask } from '@/services/apiTasks';
+import { useEffect, useState } from 'react';
 
 import Button from '@/ui/Button';
 import EditSubtask from './EditSubtask';
+import FormLabel from '@/ui/FormLabel';
 import { SubtaskItem } from 'Task';
 import Tag from '@/ui/Tag';
-import { editTask, getTask } from '@/services/apiTasks';
 import { toast } from 'react-toastify';
-import { useEffect, useState } from 'react';
 import { useEditSubtask } from './EditSubtaskContext';
-import FormLabel from '@/ui/FormLabel';
 
 const EditTask = () => {
   const task: any = useLoaderData();
@@ -108,6 +108,7 @@ const EditTask = () => {
           <input type="hidden" name="priority" value={priority} />
           <input type="hidden" name="option" value={JSON.stringify(option)} />
           <input type="hidden" name="taskId" value={task.id} />
+          <input type="hidden" name="progress" value={task.progress} />
         </Form>
         <EditSubtask priority={priority} option={option} flashHandler={setFlashBorder} />
       </div>
@@ -116,14 +117,14 @@ const EditTask = () => {
 };
 
 export const loader: LoaderFunction<any> = ({ params }: any) => {
-  const task = getTask(params.id);
+  const task = getTask(params.type, params.id);
   return task;
 };
 
 export const action = async ({ request }: { request: any }) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
-  const { taskId, title, details, priority, option } = data;
+  const { taskId, title, details, priority, option, progress } = data;
 
   if (!title || !details) {
     toast.error('Not enough content!');
@@ -133,7 +134,7 @@ export const action = async ({ request }: { request: any }) => {
   const base = { id: taskId, title, details, priority };
 
   let task;
-  if (option === 'true') task = { ...base, difficulty: data.difficulty, progress: 0 };
+  if (option === 'true') task = { ...base, difficulty: data.difficulty, progress: Number(progress) };
   else {
     const temp = JSON.parse(String(data.subtask));
     const subtaskNum = Number(Object.keys(temp).reduce((acc, cur) => acc + temp[cur].length, 0)) || 0;

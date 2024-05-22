@@ -32,6 +32,7 @@ const TaskDetails = ({ task, handleDetailState }: TaskDetailsProps) => {
   const { id, title, details, progress, priority, difficulty, subtask } = task;
   const [focus, setFocus] = useState(initialState);
   const { type, item } = focus;
+  const taskType = task.progress === 100 ? 'done' : 'todo';
   const navigate = useNavigate();
   const focusTask: Focus = {
     id,
@@ -120,7 +121,7 @@ const TaskDetails = ({ task, handleDetailState }: TaskDetailsProps) => {
           )}
         </div>
         <div className="flex items-center w-full gap-2 px-8">
-          <Button type="edit" handler={() => navigate(`/app/edit/${id}`)}>
+          <Button type="edit" handler={() => navigate(`/app/edit/${taskType}/${id}`)}>
             Edit
           </Button>
           {difficulty && (
