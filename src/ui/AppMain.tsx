@@ -25,7 +25,7 @@ const AppMain = ({ children, name }: { children: ReactNode; name: string }) => {
       <div className="flex items-center justify-between h-16 pb-5 lg:text-h3 sm:text-h4 text-h5">
         <div className="flex items-center gap-4 whitespace-nowrap">
           <span className="">{name}</span>
-          <span className="flex flex-col justify-center gap-2 px-2 text-sm sm:flex-col">
+          <span className="flex flex-wrap justify-center gap-2 px-2 text-sm">
             {priority && <Tag type={priority} handler={priorityHandler} />}
             {difficulty && <Tag type={difficulty} handler={difficultyHandler} />}
           </span>
