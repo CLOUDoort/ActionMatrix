@@ -74,22 +74,22 @@ const TaskDetails = ({ task, handleDetailState }: TaskDetailsProps) => {
             <HiOutlineXMark size={25} className="cursor-pointer" onClick={handleDetailState} />
           </div>
           <div className="flex items-center gap-5">
-            <span className="w-20 text-h5">Title</span>
-            <span className="font-paragraph">{title}</span>
+            <span className="min-w-20 text-h5">Title</span>
+            <span className="flex-1 font-paragraph">{title}</span>
           </div>
           <div className="flex items-center gap-5">
-            <span className="w-20 text-h5">Details</span>
-            <span className="font-paragraph">{details}</span>
+            <span className="min-w-20 text-h5">Details</span>
+            <span className="break-all font-paragraph">{details}</span>
           </div>
           <div className="flex items-center gap-5">
-            <span className="w-20 text-h5">Progress</span>
+            <span className="min-w-20 text-h5">Progress</span>
             <div className="flex items-center gap-2 pr-5 rounded w-28 sm:w-40 md:w-48">
               <Progress value={progress} />
               <span className="font-paragraph">{progress}%</span>
             </div>
           </div>
           <div className="flex items-center gap-5">
-            <span className="w-20 text-h5">Priority</span>
+            <span className="min-w-20 text-h5">Priority</span>
             <span className="font-paragraph">
               <Tag type={priority} button={false} />
             </span>

@@ -15,12 +15,12 @@ const FocusTask = ({ focus, handleFinish }: { focus: Focus; handleFinish: () => 
           <div className="flex flex-col w-full gap-7">
             <h1 className="text-[3.5rem] text-center mb-3">FOCUS</h1>
             <div className="flex items-center gap-5">
-              <span className="w-28 text-h5">Title</span>
-              <span className="font-paragraph">{title}</span>
+              <span className="min-w-28 text-h5">Title</span>
+              <span className="flex-1 font-paragraph">{title}</span>
             </div>
             <div className="flex items-center gap-5">
-              <span className="w-28 text-h5">Details</span>
-              <span className="font-paragraph">{details}</span>
+              <span className="min-w-28 text-h5">Details</span>
+              <span className="flex-grow break-all font-paragraph">{details}</span>
             </div>
             <div className="flex items-center gap-5">
               <span className="w-28 text-h5">Priority</span>
