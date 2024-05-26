@@ -1,6 +1,7 @@
 import { ReactNode, createContext, useContext, useReducer } from 'react';
-import { toast } from 'react-toastify';
 import type { Subtask, SubtaskItem } from 'Task';
+
+import { toast } from 'react-toastify';
 
 interface ValueInterface {
   subtask: Subtask;
@@ -41,7 +42,7 @@ const reducer = (state: Subtask, action: ActionInterface): Subtask => {
     }
     case 'subtask/modified': {
       const { prev, cur } = action.payload;
-      const curArray = state[cur] ? [...state[cur.difficulty], cur] : [cur];
+      const curArray = state[cur.difficulty] ? [...state[cur.difficulty], cur] : [cur];
       if (prev.difficulty !== cur.difficulty) {
         return {
           ...state,
