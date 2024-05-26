@@ -10,6 +10,7 @@ import TaskDetailsSubtaskItem from './TaskDetailsSubtaskItem';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { calcProgressColor } from '@/utils/calcProgressColor';
 
 const initialState = {
   type: '',
@@ -42,6 +43,8 @@ const TaskDetails = ({ task, handleDetailState }: TaskDetailsProps) => {
     priority,
     difficulty: difficulty !== undefined ? difficulty : '',
   };
+
+  const progressColor = calcProgressColor(progress);
 
   const focusHandler = (type: string, item: Focus) => setFocus({ type, item });
 
@@ -84,7 +87,7 @@ const TaskDetails = ({ task, handleDetailState }: TaskDetailsProps) => {
           <div className="flex items-center gap-5">
             <span className="min-w-20 text-h5">Progress</span>
             <div className="flex items-center gap-2 pr-5 rounded w-28 sm:w-40 md:w-48">
-              <Progress value={progress} />
+              <Progress value={progress} indicatorColor={progressColor} />
               <span className="font-paragraph">{progress}%</span>
             </div>
           </div>

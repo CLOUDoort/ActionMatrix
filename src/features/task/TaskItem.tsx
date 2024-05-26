@@ -1,12 +1,14 @@
-import type { Task } from 'Task';
-import Tag from '../../ui/Tag';
-import { Progress } from '@/components/ui/progress';
 import React, { useState } from 'react';
+
+import { Progress } from '@/components/ui/progress';
+import Tag from '../../ui/Tag';
+import type { Task } from 'Task';
+import TaskDetails from './details/TaskDetails';
 import { TiDelete } from 'react-icons/ti';
 import { deleteTask } from '@/services/apiTasks';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import TaskDetails from './details/TaskDetails';
+import { useNavigate } from 'react-router-dom';
+import { calcProgressColor } from '@/utils/calcProgressColor';
 
 const TaskItem = ({ type, task }: { type: string; task: Task }) => {
   const { title, progress, priority, difficulty, subtask } = task;
@@ -18,6 +20,7 @@ const TaskItem = ({ type, task }: { type: string; task: Task }) => {
     navigation(`/app/${type}`);
     toast.success(`Delete ${title}`);
   };
+  const progressColor = calcProgressColor(progress);
   return (
     <>
       <div className="flex items-center justify-between w-full px-3 transition-colors border-b-2 font-paragraph hover:bg-slate-200/50">
@@ -27,7 +30,7 @@ const TaskItem = ({ type, task }: { type: string; task: Task }) => {
         >
           <div className="w-24 whitespace-pre-line sm:w-36 md:w-44">{title}</div>
           <div className="flex items-center gap-2 pr-5 rounded w-28 sm:w-40 md:w-48">
-            <Progress value={progress} />
+            <Progress value={progress} indicatorColor={progressColor} />
             <span>{progress}%</span>
           </div>
           <div className="w-28 sm:w-40 md:w-48">
