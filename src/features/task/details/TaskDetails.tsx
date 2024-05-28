@@ -34,6 +34,7 @@ const TaskDetails = ({ task, handleDetailState }: TaskDetailsProps) => {
   const [focus, setFocus] = useState(initialState);
   const { type, item } = focus;
   const taskType = task.progress === 100 ? 'done' : 'todo';
+  const isComplete = progress === 100;
   const navigate = useNavigate();
   const focusTask: Focus = {
     id,
@@ -128,8 +129,13 @@ const TaskDetails = ({ task, handleDetailState }: TaskDetailsProps) => {
             Edit
           </Button>
           {difficulty && (
-            <Button type="focus" handler={() => focusHandler('task', focusTask)} conditionStyle="w-full">
-              Focus
+            <Button
+              type={isComplete ? 'optionfalse' : 'focus'}
+              handler={() => focusHandler('task', focusTask)}
+              conditionStyle="w-full"
+              disabled={isComplete}
+            >
+              {isComplete ? 'Completed' : 'Focus'}
             </Button>
           )}
         </div>
