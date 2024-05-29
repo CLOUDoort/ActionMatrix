@@ -1,6 +1,6 @@
 import { HiOutlineBars3, HiOutlineDocument, HiOutlineDocumentCheck } from 'react-icons/hi2';
 import AppNavItem from './AppNavItem';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import AppNavLink from './AppNavLink';
 import { Difficulty, Priority } from '../../constants/constants';
 import { buildLink } from '../../utils/buildLink';
@@ -14,10 +14,10 @@ const AppNavList = ({ handler }: { handler: () => void }) => {
     <ul className="flex flex-col gap-4">
       {/* Logo */}
       <li className="flex items-center justify-between">
-        <span className="flex items-center justify-center gap-2">
+        <Link to="/" className="flex items-center justify-center gap-2">
           <img src="/Logo.png" alt="Logo" className="size-6" />
           <p className="text-base">ActionMatrix</p>
-        </span>
+        </Link>
         <HiOutlineBars3 onClick={handler} size={35} className="p-1.5 rounded cursor-pointer hover:bg-slate-200" />
       </li>
 
