@@ -24,12 +24,7 @@ export const getTasks = (type: string, priority: string | null, difficulty: stri
     });
 
     // task에 subtask가 있을 경우 subtask의 해당 difficulty에 맞는 task 분리
-    let subtaskArr = data.filter(
-      (el: Task) =>
-        el.subtask &&
-        el.subtask[difficulty].length !== 0 &&
-        el.subtask[difficulty].some((el: SubtaskItem) => !el.complete),
-    );
+    let subtaskArr = data.filter((el: Task) => el.subtask && el.subtask[difficulty].length !== 0);
     data = [...difficultyArr, ...subtaskArr];
   }
 
