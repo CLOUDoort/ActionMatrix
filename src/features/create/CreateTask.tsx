@@ -2,17 +2,18 @@ import { Form, redirect, useNavigate } from 'react-router-dom';
 
 import Button from '../../ui/Button';
 import CreateSubtask from './CreateSubtask';
+import FormLabel from '@/ui/FormLabel';
 import { SubtaskItem } from 'Task';
 import Tag from '../../ui/Tag';
 import type { TaskForm } from 'Form';
 import { createTask } from '../../services/apiCreateTask';
+import { formattedDate } from '@/utils/formattedDate';
 import { nanoid } from 'nanoid';
 import { toast } from 'react-toastify';
 import { useCreateSubtask } from './CreateSubtaskContext';
 import { useState } from 'react';
-import FormLabel from '@/ui/FormLabel';
 
-const initialFormState: TaskForm = {
+const initialFormState = {
   title: '',
   details: '',
   priority: 'high',
@@ -23,12 +24,18 @@ const initialFormState: TaskForm = {
 const CreateTask = () => {
   const navigate = useNavigate();
   const [flashBorder, setFlashBorder] = useState(false);
-  const [state, setState] = useState(initialFormState);
+  const [state, setState] = useState<TaskForm>(initialFormState);
+  const { subtask, clearSubtask } = useCreateSubtask();
   const { title, details, priority, option, difficulty } = state;
-  const { subtask } = useCreateSubtask();
 
   const handleState = (key: string, value: string | boolean) => {
     setState((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const handleCancel = () => {
+    setState(initialFormState);
+    navigate(-1);
+    clearSubtask();
   };
 
   return (
@@ -91,7 +98,7 @@ const CreateTask = () => {
             )}
           </FormLabel>
           <div className="flex justify-end gap-2">
-            <Button type="cancel" handler={() => navigate(-1)}>
+            <Button type="cancel" handler={handleCancel}>
               Cancel
             </Button>
             <Button type="save" submit={true}>
@@ -127,7 +134,8 @@ export const action =
     }
 
     const taskId = nanoid(8);
-    const base = { id: taskId, title, details, priority, progress: 0 };
+    const createdAt = formattedDate(new Date());
+    const base = { id: taskId, title, details, priority, progress: 0, createdAt };
 
     let task;
     if (option === 'true') task = { ...base, difficulty: data.difficulty };

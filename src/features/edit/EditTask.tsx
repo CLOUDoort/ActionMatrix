@@ -7,6 +7,7 @@ import EditSubtask from './EditSubtask';
 import FormLabel from '@/ui/FormLabel';
 import { SubtaskItem } from 'Task';
 import Tag from '@/ui/Tag';
+import { formattedDate } from '@/utils/formattedDate';
 import { toast } from 'react-toastify';
 import { useEditSubtask } from './EditSubtaskContext';
 
@@ -131,7 +132,8 @@ export const action = async ({ request }: { request: any }) => {
     return null;
   }
 
-  const base = { id: taskId, title, details, priority };
+  const createdAt = formattedDate(new Date());
+  const base = { id: taskId, title, details, priority, createdAt };
 
   let task;
   if (option === 'true') task = { ...base, difficulty: data.difficulty, progress: Number(progress) };
