@@ -63,7 +63,7 @@ const HomeFeature = () => {
           />
           <div
             ref={lensRef}
-            className={`absolute border bg-no-repeat ${lensPosition.visible ? 'block' : 'hidden'} lg:w-[15rem] lg:h-[15rem] md:w-[10rem] md:h-[10rem] w-[5rem] h-[5rem] border-2 rounded-lg`}
+            className={`absolute border bg-no-repeat ${lensPosition.visible ? 'block' : 'hidden'} lg:w-[15rem] lg:h-[15rem] border-slate-600 md:w-[10rem] md:h-[10rem] w-[5rem] h-[5rem] border-2 rounded-lg`}
             style={{
               top: `${lensPosition.y}px`,
               left: `${lensPosition.x}px`,
