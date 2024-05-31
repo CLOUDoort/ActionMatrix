@@ -10,8 +10,8 @@ const Home = () => {
     <div className="flex flex-col items-center w-full">
       <div className="max-w-7xl min-w-[22rem]">
         <header className="flex items-center gap-2 p-5 lg:gap-3">
-          <img src="/Logo.png" alt="Logo" className="size-3 sm:size-5 md:size-7 lg:size-10" />
-          <h4 className="text-sm sm:text-base md:text-h5 lg:text-h4">ActionMatrix</h4>
+          <img src="/Logo.png" alt="Logo" className="size-5 md:size-7 lg:size-10" />
+          <h4 className="text-base md:text-h5 lg:text-h4">ActionMatrix</h4>
         </header>
 
         <main className="flex flex-col items-center justify-center w-full h-full gap-10 p-5 text-center">
