@@ -1,4 +1,4 @@
-import type { Focus, SubtaskItem, Task } from 'Task';
+import type { Focus, Task } from 'Task';
 import { finishSubtask, finishTask } from '@/services/apiTasks';
 
 import Button from '@/ui/Button';
@@ -6,11 +6,12 @@ import FocusTask from '../../focus/FocusTask';
 import { HiOutlineXMark } from 'react-icons/hi2';
 import { Progress } from '@/components/ui/progress';
 import Tag from '@/ui/Tag';
-import TaskDetailsSubtaskItem from './TaskDetailsSubtaskItem';
+import TaskDetailsLabel from './TaskDetailsLabel';
+import TaskDetailsSubtask from './TaskDetailsSubtask';
+import { calcProgressColor } from '@/utils/calcProgressColor';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { calcProgressColor } from '@/utils/calcProgressColor';
 
 const initialState = {
   type: '',
@@ -30,7 +31,7 @@ interface TaskDetailsProps {
 }
 
 const TaskDetails = ({ task, handleDetailState }: TaskDetailsProps) => {
-  const { id, title, details, progress, priority, difficulty, subtask } = task;
+  const { id, title, details, progress, priority, difficulty, subtask, createdAt } = task;
   const [focus, setFocus] = useState(initialState);
   const { type, item } = focus;
   const taskType = task.progress === 100 ? 'done' : 'todo';
@@ -77,50 +78,37 @@ const TaskDetails = ({ task, handleDetailState }: TaskDetailsProps) => {
             <h3 className="lg:text-h3 text-h4">Task Details</h3>
             <HiOutlineXMark size={25} className="cursor-pointer" onClick={handleDetailState} />
           </div>
-          <div className="flex items-center gap-5">
-            <span className="min-w-20 text-h5">Title</span>
+          <TaskDetailsLabel name="Title">
             <span className="flex-1 font-paragraph">{title}</span>
-          </div>
-          <div className="flex items-center gap-5">
-            <span className="min-w-20 text-h5">Details</span>
+          </TaskDetailsLabel>
+          <TaskDetailsLabel name="Details">
             <span className="break-all font-paragraph">{details}</span>
-          </div>
-          <div className="flex items-center gap-5">
-            <span className="min-w-20 text-h5">Progress</span>
+          </TaskDetailsLabel>
+          <TaskDetailsLabel name="CreatedAt">
+            <span className="break-all font-paragraph">{createdAt}</span>
+          </TaskDetailsLabel>
+          <TaskDetailsLabel name="Progress">
             <div className="flex items-center gap-2 pr-5 rounded w-28 sm:w-40 md:w-48">
               <Progress value={progress} indicatorColor={progressColor} />
               <span className="font-paragraph">{progress}%</span>
             </div>
-          </div>
-          <div className="flex items-center gap-5">
-            <span className="min-w-20 text-h5">Priority</span>
+          </TaskDetailsLabel>
+          <TaskDetailsLabel name="Priority">
             <span className="font-paragraph">
               <Tag type={priority} button={false} />
             </span>
-          </div>
+          </TaskDetailsLabel>
           {difficulty && (
-            <div className="flex items-center gap-5">
-              <span className="w-20 text-h5">Difficulty</span>
+            <TaskDetailsLabel name="Difficulty">
               <span className="font-paragraph">
                 <Tag type={difficulty} button={false} />
               </span>
-            </div>
+            </TaskDetailsLabel>
           )}
           {subtask && (
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-7">
               <span className="w-20 text-h5">Subtask</span>
-              {Object.keys(subtask)
-                .filter((el) => subtask[el].length !== 0)
-                .map((key: string) => (
-                  <div className="space-y-3 font-paragraph" key={key}>
-                    <Tag type={key} button={false} />
-                    <ul className="space-y-1">
-                      {subtask[key].map((item: SubtaskItem) => (
-                        <TaskDetailsSubtaskItem focusHandler={focusHandler} subtask={item} key={item.id} />
-                      ))}
-                    </ul>
-                  </div>
-                ))}
+              <TaskDetailsSubtask subtask={subtask} handler={focusHandler} />
             </div>
           )}
         </div>
