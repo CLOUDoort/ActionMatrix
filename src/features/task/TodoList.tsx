@@ -1,7 +1,7 @@
 import { LoaderFunction, useLoaderData } from 'react-router-dom';
 
 import AppMain from '../../ui/AppMain';
-import Label from '../../ui/Label';
+import TaskLabel from '../../ui/TaskLabel';
 import NoTasks from '../../ui/NoTasks';
 import type { Task } from 'Task';
 import TaskItem from './TaskItem';
@@ -12,7 +12,7 @@ const TodoList = () => {
 
   return (
     <AppMain name="Tasks / Todo">
-      <Label />
+      <TaskLabel />
       {todo.length === 0 ? (
         <NoTasks type="Todo" />
       ) : (
