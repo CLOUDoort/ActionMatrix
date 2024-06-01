@@ -4,7 +4,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import Button from '../../ui/Button';
 import CreateSubtask from './CreateSubtask';
 import LabelForm from '@/features/create/form/LabelForm';
-import type { SubtaskItem } from 'Task';
 import { createTask } from '../../services/apiCreateTask';
 import { formattedDate } from '@/utils/formattedDate';
 import { nanoid } from 'nanoid';
@@ -14,6 +13,8 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import type { Inputs } from 'Create';
 import TagForm from './form/TagForm';
+import { assignTaskId } from '@/utils/assignTaskId';
+import { checkSubtaskNum } from '@/utils/checkSubtaskNum';
 
 const CreateTaskForm = () => {
   const navigate = useNavigate();
@@ -55,19 +56,12 @@ const CreateTaskForm = () => {
     let task;
     if (option) task = { ...base, difficulty };
     else {
-      const subtaskNum = Object.keys(subtask).reduce((acc, cur) => acc + subtask[cur].length, 0);
-      if (subtaskNum === 0) {
+      const subtaskNum = checkSubtaskNum(subtask);
+      if (!subtaskNum) {
         toast.error('Add subtask!');
         return null;
       }
-      Object.keys(subtask)
-        .filter((el) => subtask[el].length !== 0)
-        .forEach((key) => {
-          subtask[key] = subtask[key].map((item: SubtaskItem) => {
-            return { ...item, taskId };
-          });
-        });
-      task = { ...base, subtask, subtaskNum, completedSubtaskNum: 0 };
+      task = { ...base, subtask: assignTaskId(subtask, taskId), subtaskNum, completedSubtaskNum: 0 };
     }
 
     createTask('todo', task);
