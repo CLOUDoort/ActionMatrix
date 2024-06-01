@@ -5,10 +5,9 @@ import Tag from '../../ui/Tag';
 import type { Task } from 'Task';
 import TaskDetails from './details/TaskDetails';
 import { TiDelete } from 'react-icons/ti';
-import { deleteTask } from '@/services/apiTasks';
-import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
 import { calcProgressColor } from '@/utils/calcProgressColor';
+import { deleteTask } from '@/services/apiTasks';
+import { useNavigate } from 'react-router-dom';
 
 const TaskItem = ({ type, task }: { type: string; task: Task }) => {
   const { title, progress, priority, difficulty, subtask } = task;
@@ -18,7 +17,6 @@ const TaskItem = ({ type, task }: { type: string; task: Task }) => {
   const clickDelete = () => {
     deleteTask(type, task.id);
     navigation(`/app/${type}`);
-    toast.success(`Delete ${title}`);
   };
   const progressColor = calcProgressColor(progress);
   return (
