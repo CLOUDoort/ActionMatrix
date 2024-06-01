@@ -1,10 +1,10 @@
 import type { Task } from 'Task';
 
 export const createTask = (type: string, task: Task) => {
-  let temp;
+  let storageTask;
   let oldTask = localStorage.getItem(type);
-  if (oldTask === null) temp = [];
-  else temp = JSON.parse(oldTask);
+  if (oldTask === null) storageTask = [];
+  else storageTask = JSON.parse(oldTask);
 
-  localStorage.setItem('todo', JSON.stringify([...temp, task]));
+  localStorage.setItem('todo', JSON.stringify([...storageTask, task]));
 };

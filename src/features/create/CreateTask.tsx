@@ -1,133 +1,49 @@
-import { Form, redirect, useNavigate } from 'react-router-dom';
+import { DetailsInput, TitleInput } from './form/InputForm';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Button from '../../ui/Button';
 import CreateSubtask from './CreateSubtask';
-import FormLabel from '@/ui/FormLabel';
-import { SubtaskItem } from 'Task';
-import Tag from '../../ui/Tag';
-import type { TaskForm } from 'Form';
+import LabelForm from '@/features/create/form/LabelForm';
+import type { SubtaskItem } from 'Task';
 import { createTask } from '../../services/apiCreateTask';
 import { formattedDate } from '@/utils/formattedDate';
 import { nanoid } from 'nanoid';
 import { toast } from 'react-toastify';
 import { useCreateSubtask } from './CreateSubtaskContext';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-
-const initialFormState = {
-  title: '',
-  details: '',
-  priority: 'high',
-  option: true,
-  difficulty: 'hard',
-};
+import PriorityForm from './form/PriorityForm';
+import DifficultyForm from './form/DifficultyForm';
+import type { Inputs } from 'Create';
 
 const CreateTask = () => {
   const navigate = useNavigate();
-  const [flashBorder, setFlashBorder] = useState(false);
-  const [state, setState] = useState<TaskForm>(initialFormState);
   const { subtask, clearSubtask } = useCreateSubtask();
-  const { title, details, priority, option, difficulty } = state;
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<Inputs>();
+  const [flashBorder, setFlashBorder] = useState(false);
+  const [option, setOption] = useState(true);
+  const [priority, setPriority] = useState('high');
+  const [difficulty, setDifficulty] = useState('hard');
 
-  const handleState = (key: string, value: string | boolean) => {
-    setState((prev) => ({ ...prev, [key]: value }));
+  const handleReset = () => {
+    clearSubtask();
+    setOption(true);
+    setPriority('high');
+    setDifficulty('hard');
+    reset();
   };
 
   const handleCancel = () => {
-    setState(initialFormState);
+    handleReset();
     navigate(-1);
-    clearSubtask();
   };
 
-  return (
-    <section className="flex flex-col w-full max-h-[50rem] gap-3 px-5 py-9 lg:px-14 max-w-7xl">
-      <div className="flex items-center justify-between h-16 pb-5 lg:text-h3 text-h4 ">
-        <p>New Task</p>
-      </div>
-      <div className={`flex-1 flex flex-col xl:flex-row gap-5 pb-10`}>
-        <Form
-          method="POST"
-          className="w-full p-8 space-y-4 border rounded-md border-slate-200 xl:w-[29rem] min-w-[25rem] h-full"
-        >
-          <FormLabel name="Title">
-            <input
-              type="text"
-              id="title"
-              name="title"
-              className="p-2 border-2 rounded-md border-slate-200"
-              placeholder="Title"
-              value={title}
-              onChange={(e) => handleState('title', e.target.value)}
-            />
-          </FormLabel>
-          <FormLabel name="Details">
-            <textarea
-              id="details"
-              name="details"
-              className="p-2 border-2 rounded-md border-slate-200 min-h-20"
-              placeholder="Details"
-              value={details}
-              onChange={(e) => handleState('details', e.target.value)}
-            />
-          </FormLabel>
-          <FormLabel name="Priority">
-            <div className="flex gap-2">
-              <Tag type="high" select={priority} handler={() => handleState('priority', 'high')} />
-              <Tag type="medium" select={priority} handler={() => handleState('priority', 'medium')} />
-              <Tag type="low" select={priority} handler={() => handleState('priority', 'low')} />
-            </div>
-          </FormLabel>
-          <FormLabel name="Options">
-            <div className="flex gap-2">
-              <Button type={`option${option}`} handler={() => handleState('option', true)}>
-                Difficulty
-              </Button>
-              <Button
-                type={`option${!option}`}
-                handler={() => handleState('option', false)}
-                conditionStyle={`${flashBorder ? 'border-red-400 bg-red-300' : ''}`}
-              >
-                Divide
-              </Button>
-            </div>
-            {option && (
-              <div className="flex gap-2">
-                <Tag type="hard" select={difficulty} handler={() => handleState('difficulty', 'hard')} />
-                <Tag type="normal" select={difficulty} handler={() => handleState('difficulty', 'normal')} />
-                <Tag type="easy" select={difficulty} handler={() => handleState('difficulty', 'easy')} />
-              </div>
-            )}
-          </FormLabel>
-          <div className="flex justify-end gap-2">
-            <Button type="cancel" handler={handleCancel}>
-              Cancel
-            </Button>
-            <Button type="save" submit={true}>
-              Save
-            </Button>
-          </div>
-
-          {/* input을 통해 data 전달 */}
-          <input
-            type="hidden"
-            name={option ? 'difficulty' : 'subtask'}
-            value={option ? difficulty : JSON.stringify(subtask)}
-          />
-          <input type="hidden" name="priority" value={priority} />
-          <input type="hidden" name="option" value={JSON.stringify(option)} />
-        </Form>
-        <CreateSubtask priority={priority} option={option} flashHandler={setFlashBorder} />
-      </div>
-    </section>
-  );
-};
-
-export const action =
-  ({ clearSubtask }: { clearSubtask: () => void }) =>
-  async ({ request }: { request: any }) => {
-    const formData = await request.formData();
-    const data = Object.fromEntries(formData);
-    const { title, details, priority, option } = data;
-
+  const onSubmit: SubmitHandler<Inputs> = ({ title, details }) => {
     if (!title || !details) {
       toast.error('Not enough content!');
       return null;
@@ -138,28 +54,77 @@ export const action =
     const base = { id: taskId, title, details, priority, progress: 0, createdAt };
 
     let task;
-    if (option === 'true') task = { ...base, difficulty: data.difficulty };
+    if (option) task = { ...base, difficulty };
     else {
-      const temp = JSON.parse(String(data.subtask));
-      const subtaskNum = Object.keys(temp).reduce((acc, cur) => acc + temp[cur].length, 0);
+      const subtaskNum = Object.keys(subtask).reduce((acc, cur) => acc + subtask[cur].length, 0);
       if (subtaskNum === 0) {
         toast.error('Add subtask!');
         return null;
       }
-      Object.keys(temp)
-        .filter((el) => temp[el].length !== 0)
+      Object.keys(subtask)
+        .filter((el) => subtask[el].length !== 0)
         .forEach((key) => {
-          temp[key] = temp[key].map((item: SubtaskItem) => {
+          subtask[key] = subtask[key].map((item: SubtaskItem) => {
             return { ...item, taskId };
           });
         });
-
-      task = { ...base, subtask: temp, subtaskNum, completedSubtaskNum: 0 };
+      task = { ...base, subtask, subtaskNum, completedSubtaskNum: 0 };
     }
+
     createTask('todo', task);
-    clearSubtask();
+    handleReset();
+
     toast.success('Create Task!');
-    return redirect('/app/todo');
+    navigate('/app/todo');
   };
+
+  return (
+    <section className="flex flex-col w-full max-h-[50rem] gap-3 px-5 py-9 lg:px-14 max-w-7xl">
+      <div className="flex items-center justify-between h-16 pb-5 lg:text-h3 text-h4 ">
+        <p>New Task</p>
+      </div>
+      <div className={`flex-1 flex gap-5 xl:flex-row flex-col pb-10`}>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="w-full p-8 space-y-4 border rounded-md border-slate-200 xl:w-[29rem] min-w-[25rem] h-full"
+        >
+          <LabelForm name="Title" error={errors.title?.message}>
+            <TitleInput register={register} />
+          </LabelForm>
+          <LabelForm name="Details" error={errors.details?.message}>
+            <DetailsInput register={register} />
+          </LabelForm>
+          <LabelForm name="Priority">
+            <PriorityForm priority={priority} handlePriority={setPriority} />
+          </LabelForm>
+          <LabelForm name="Options">
+            <div className="flex gap-2">
+              <Button name={`option${option}`} handler={() => setOption(true)}>
+                Difficulty
+              </Button>
+              <Button
+                name={`option${!option}`}
+                handler={() => setOption(false)}
+                conditionStyle={`${flashBorder ? 'border-red-400 bg-red-300' : ''}`}
+              >
+                Divide
+              </Button>
+            </div>
+            {option && <DifficultyForm difficulty={difficulty} handleDifficulty={setDifficulty} />}
+          </LabelForm>
+          <div className="flex justify-end gap-2">
+            <Button name="cancel" handler={handleCancel}>
+              Cancel
+            </Button>
+            <Button name="save" type="submit">
+              Save
+            </Button>
+          </div>
+        </form>
+        <CreateSubtask priority={priority} option={option} flashHandler={setFlashBorder} />
+      </div>
+    </section>
+  );
+};
 
 export default CreateTask;

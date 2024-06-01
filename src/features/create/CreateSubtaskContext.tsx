@@ -1,19 +1,6 @@
+import type { ActionInterface, ValueInterface } from 'Create';
 import type { Subtask, SubtaskItem } from 'Task';
 import { ReactNode, createContext, useContext, useReducer } from 'react';
-import { toast } from 'react-toastify';
-
-interface ValueInterface {
-  subtask: Subtask;
-  createSubtask: (subtask: SubtaskItem) => void;
-  modifySubtask: (pre: SubtaskItem, cur: SubtaskItem) => void;
-  deleteSubtask: (subtask: SubtaskItem) => void;
-  clearSubtask: () => void;
-}
-
-type ActionInterface = {
-  type: string;
-  payload?: any;
-};
 
 const CreateSubtaskContext = createContext<ValueInterface | null>(null);
 
@@ -31,7 +18,7 @@ const reducer = (state: Subtask, action: ActionInterface): Subtask => {
         [action.payload.difficulty]: [...state[action.payload.difficulty], action.payload],
       };
     }
-    case 'subtask/modified': {
+    case 'subtask/updated': {
       const { prev, cur } = action.payload;
       if (prev.difficulty !== cur.difficulty) {
         return {
@@ -67,18 +54,16 @@ const CreateSubtaskContextProvider = ({ children }: { children: ReactNode }) => 
       type: 'subtask/created',
       payload: subtask,
     });
-    toast.success('Create Subtask!');
   };
 
-  const modifySubtask = (prev: SubtaskItem, cur: SubtaskItem) => {
+  const updateSubtask = (prev: SubtaskItem, cur: SubtaskItem) => {
     dispatch({
-      type: 'subtask/modified',
+      type: 'subtask/updated',
       payload: {
         prev,
         cur,
       },
     });
-    toast.success('Modify Subtask!');
   };
 
   const deleteSubtask = (subtask: SubtaskItem) => {
@@ -86,7 +71,6 @@ const CreateSubtaskContextProvider = ({ children }: { children: ReactNode }) => 
       type: 'subtask/deleted',
       payload: subtask,
     });
-    toast.success('Delete Subtask!');
   };
 
   const clearSubtask = () => {
@@ -96,7 +80,7 @@ const CreateSubtaskContextProvider = ({ children }: { children: ReactNode }) => 
   };
 
   return (
-    <CreateSubtaskContext.Provider value={{ subtask, createSubtask, modifySubtask, deleteSubtask, clearSubtask }}>
+    <CreateSubtaskContext.Provider value={{ subtask, createSubtask, updateSubtask, deleteSubtask, clearSubtask }}>
       {children}
     </CreateSubtaskContext.Provider>
   );
