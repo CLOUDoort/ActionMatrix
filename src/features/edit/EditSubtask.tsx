@@ -1,10 +1,10 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import Button from '@/ui/Button';
+import EditSubtaskList from './EditSubtaskList';
 import { HiOutlinePlus } from 'react-icons/hi2';
 import { SubtaskFormItem } from 'Form';
 import Tag from '@/ui/Tag';
-import EditSubtaskList from './EditSubtaskList';
 import { nanoid } from 'nanoid';
 import { toast } from 'react-toastify';
 import { useEditSubtask } from './EditSubtaskContext';
@@ -78,7 +78,7 @@ const EditSubtask = ({ priority, option, flashHandler }: EditSubtaskProps) => {
       <EditSubtaskList option={option} />
 
       {/* New Subtask Button */}
-      <Button type="subtask" conditionStyle={option ? 'cursor-not-allowed' : ''} handler={clickSubtask}>
+      <Button name="subtask" conditionStyle={option ? 'cursor-not-allowed' : ''} handler={clickSubtask}>
         <HiOutlinePlus size={20} />
         <span>New Subtask</span>
       </Button>
@@ -108,10 +108,10 @@ const EditSubtask = ({ priority, option, flashHandler }: EditSubtaskProps) => {
             <Tag type="easy" select={difficulty} handler={() => handleState('difficulty', 'easy')} />
           </div>
           <div className="flex justify-end gap-2">
-            <Button handler={reset} type="cancel">
+            <Button name="cancel" handler={reset}>
               Cancel
             </Button>
-            <Button submit={true} type="save" handler={submitHandler}>
+            <Button name="save" type="submit" handler={submitHandler}>
               Save
             </Button>
           </div>

@@ -25,22 +25,17 @@ const styles: { [key: string]: string } = {
 };
 
 type PropsType = {
+  type?: 'button' | 'reset' | 'submit' | undefined;
+  name: string;
   children: ReactNode;
-  type: string;
   handler?: any;
   disabled?: boolean;
-  submit?: boolean;
   conditionStyle?: string;
 };
 
-const Button = ({ children, type, handler, disabled = false, submit = false, conditionStyle = '' }: PropsType) => {
+const Button = ({ name, children, handler, disabled = false, conditionStyle = '', type = 'button' }: PropsType) => {
   return (
-    <button
-      type={submit ? 'submit' : 'button'}
-      onClick={handler}
-      disabled={disabled}
-      className={`${styles[type]} ${conditionStyle}`}
-    >
+    <button type={type} onClick={handler} disabled={disabled} className={`${styles[name]} ${conditionStyle}`}>
       {children}
     </button>
   );

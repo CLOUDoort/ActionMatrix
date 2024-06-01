@@ -1,7 +1,7 @@
 import Button from './Button';
+import { HiOutlineFolderPlus } from 'react-icons/hi2';
 import { HiOutlinePlus } from 'react-icons/hi2';
 import { useNavigate } from 'react-router-dom';
-import { HiOutlineFolderPlus } from 'react-icons/hi2';
 
 const NoTasks = ({ type }: { type: string }) => {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ const NoTasks = ({ type }: { type: string }) => {
           <h2 className="text-h4 lg:text-h3 text-Button">No Tasks</h2>
           <p className="mb-3">There is no {type} task</p>
           {type === 'Todo' && (
-            <Button type="create" handler={() => navigate('/app/create')}>
+            <Button name="create" handler={() => navigate('/app/create')}>
               <HiOutlinePlus size={20} />
               <span>New Task</span>
             </Button>

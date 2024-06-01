@@ -23,10 +23,10 @@ const Home = () => {
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-5 sm:mb-10">
-            <Button handler={() => navigate('/app/todo')} type="try">
+            <Button handler={() => navigate('/app/todo')} name="try">
               Try a Demo
             </Button>
-            <Button handler={googleLogin} type="google">
+            <Button handler={googleLogin} name="google">
               <div className="flex items-center justify-center gap-3 whitespace-nowrap">
                 <FcGoogle className="size-4 lg:size-5" /> Start with Google
               </div>

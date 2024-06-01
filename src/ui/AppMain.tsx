@@ -30,7 +30,7 @@ const AppMain = ({ children, name }: { children: ReactNode; name: string }) => {
             {difficulty && <Tag type={difficulty} handler={difficultyHandler} />}
           </span>
         </div>
-        <Button type="create" handler={() => navigate('/app/create')}>
+        <Button name="create" handler={() => navigate('/app/create')}>
           <HiOutlinePlus size={20} />
           <span>New Task</span>
         </Button>

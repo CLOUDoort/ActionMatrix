@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import Button from '@/ui/Button';
 import EditSubtask from './EditSubtask';
-import FormLabel from '@/ui/FormLabel';
+import FormLabel from '@/features/create/form/LabelForm';
 import { SubtaskItem } from 'Task';
 import Tag from '@/ui/Tag';
 import { formattedDate } from '@/utils/formattedDate';
@@ -72,11 +72,11 @@ const EditTask = () => {
           </FormLabel>
           <FormLabel name="Options">
             <div className="flex gap-2">
-              <Button type={`option${option}`} handler={() => handleState('option', true)}>
+              <Button name={`option${option}`} handler={() => handleState('option', true)}>
                 Difficulty
               </Button>
               <Button
-                type={`option${!option}`}
+                name={`option${!option}`}
                 handler={() => handleState('option', false)}
                 conditionStyle={`${flashBorder ? 'border-red-400 bg-red-300' : ''}`}
               >
@@ -92,10 +92,10 @@ const EditTask = () => {
             )}
           </FormLabel>
           <div className="flex justify-end gap-2">
-            <Button type="cancel" handler={() => navigate(-1)}>
+            <Button name="cancel" handler={() => navigate(-1)}>
               Cancel
             </Button>
-            <Button type="save" submit={true}>
+            <Button name="save" type="submit">
               Save
             </Button>
           </div>

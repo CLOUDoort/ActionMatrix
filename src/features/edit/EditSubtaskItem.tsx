@@ -4,8 +4,8 @@ import type { SubtaskItem } from 'Task';
 import Tag from '../../ui/Tag';
 import { TiDelete } from 'react-icons/ti';
 import { toast } from 'react-toastify';
-import { useState } from 'react';
 import { useEditSubtask } from './EditSubtaskContext';
+import { useState } from 'react';
 
 const EditSubtaskItem = ({ subtask }: { subtask: SubtaskItem }) => {
   const { deleteSubtask, modifySubtask } = useEditSubtask();
@@ -73,10 +73,10 @@ const EditSubtaskItem = ({ subtask }: { subtask: SubtaskItem }) => {
             <Tag type="easy" select={difficulty} handler={() => handleState('difficulty', 'easy')} />
           </div>
           <div className="flex justify-end gap-2">
-            <Button handler={reset} type="cancel">
+            <Button handler={reset} name="cancel">
               Cancel
             </Button>
-            <Button handler={submitHandler} type="save">
+            <Button handler={submitHandler} name="save">
               Save
             </Button>
           </div>

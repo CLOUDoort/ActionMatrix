@@ -1,6 +1,6 @@
 import Button from '@/ui/Button';
-import Tag from '@/ui/Tag';
 import type { Focus } from 'Task';
+import Tag from '@/ui/Tag';
 
 const FocusTask = ({ focus, handleFinish }: { focus: Focus; handleFinish: () => void }) => {
   const { title, details, priority, difficulty } = focus;
@@ -36,7 +36,7 @@ const FocusTask = ({ focus, handleFinish }: { focus: Focus; handleFinish: () => 
             </div>
           </div>
         </div>
-        <Button type="focus" handler={handleFinish} conditionStyle="w-full">
+        <Button name="focus" handler={handleFinish} conditionStyle="w-full">
           Finish
         </Button>
       </div>
