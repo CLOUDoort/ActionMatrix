@@ -1,6 +1,7 @@
 import Button from '@/ui/Button';
 import type { Focus } from 'Task';
 import Tag from '@/ui/Tag';
+import FocusLabel from './FocusLabel';
 
 const FocusTask = ({ focus, handleFinish }: { focus: Focus; handleFinish: () => void }) => {
   const { title, details, priority, difficulty } = focus;
@@ -14,26 +15,22 @@ const FocusTask = ({ focus, handleFinish }: { focus: Focus; handleFinish: () => 
         <div className="flex items-center justify-end w-full gap-2">
           <div className="flex flex-col w-full gap-7">
             <h1 className="text-[3.5rem] text-center mb-3">FOCUS</h1>
-            <div className="flex items-center gap-5">
-              <span className="min-w-28 text-h5">Title</span>
+            <FocusLabel name="Title">
               <span className="flex-1 font-paragraph">{title}</span>
-            </div>
-            <div className="flex items-center gap-5">
-              <span className="min-w-28 text-h5">Details</span>
+            </FocusLabel>
+            <FocusLabel name="Details">
               <span className="flex-grow break-all font-paragraph">{details}</span>
-            </div>
-            <div className="flex items-center gap-5">
-              <span className="w-28 text-h5">Priority</span>
+            </FocusLabel>
+            <FocusLabel name="Priority">
               <span className="font-paragraph">
                 <Tag type={priority} button={false} />
               </span>
-            </div>
-            <div className="flex items-center gap-5">
-              <span className="w-28 text-h5">difficulty</span>
+            </FocusLabel>
+            <FocusLabel name="Difficulty">
               <span className="font-paragraph">
                 <Tag type={difficulty} button={false} />
               </span>
-            </div>
+            </FocusLabel>
           </div>
         </div>
         <Button name="focus" handler={handleFinish} conditionStyle="w-full">
