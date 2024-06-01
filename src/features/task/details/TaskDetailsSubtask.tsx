@@ -1,4 +1,4 @@
-import { Focus, Subtask, SubtaskItem } from 'Task';
+import type { Focus, Subtask, SubtaskItem } from 'Task';
 
 import Tag from '@/ui/Tag';
 import TaskDetailsSubtaskItem from './TaskDetailsSubtaskItem';

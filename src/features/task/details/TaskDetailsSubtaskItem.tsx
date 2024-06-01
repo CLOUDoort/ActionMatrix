@@ -1,6 +1,7 @@
+import type { Focus, SubtaskItem } from 'Task';
+
 import Button from '@/ui/Button';
 import { LuDot } from 'react-icons/lu';
-import type { Focus, SubtaskItem } from 'Task';
 
 const TaskDetailsSubtaskItem = ({
   subtask,
@@ -25,7 +26,7 @@ const TaskDetailsSubtaskItem = ({
         <span>{subtask.title}</span>
       </div>
       <Button
-        type={complete ? 'optionfalse' : 'focus'}
+        name={complete ? 'optionfalse' : 'focus'}
         handler={() => focusHandler('subtask', focusSubtask)}
         disabled={complete}
       >

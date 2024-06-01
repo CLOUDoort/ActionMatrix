@@ -3,7 +3,7 @@ import { LoaderFunction, useLoaderData } from 'react-router-dom';
 import AppMain from '../../ui/AppMain';
 import Label from '../../ui/Label';
 import NoTasks from '../../ui/NoTasks';
-import { Task } from 'Task';
+import type { Task } from 'Task';
 import TaskItem from './TaskItem';
 import { getTasks } from '../../services/apiTasks';
 
