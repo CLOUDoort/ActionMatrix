@@ -2,12 +2,12 @@ import type { Focus, Task } from 'Task';
 import { finishSubtask, finishTask } from '@/services/apiTasks';
 
 import Button from '@/ui/Button';
-import FocusTask from '../../focus/FocusTask';
+import FocusTask from '../focus/FocusTask';
 import { HiOutlineXMark } from 'react-icons/hi2';
 import { Progress } from '@/components/ui/progress';
 import Tag from '@/ui/Tag';
-import TaskDetailsLabel from './TaskDetailsLabel';
-import TaskDetailsSubtask from './TaskDetailsSubtask';
+import TaskDetailsLabel from './DetailsLabel';
+import TaskDetailsSubtask from './DetailsSubtask';
 import { calcProgressColor } from '@/utils/calcProgressColor';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -31,7 +31,7 @@ interface TaskDetailsProps {
 }
 
 const TaskDetails = ({ task, handleDetailState }: TaskDetailsProps) => {
-  const { id, title, details, progress, priority, difficulty, subtask, createdAt } = task;
+  const { id, title, details, progress, priority, difficulty, subtask, createdAt, updatedAt } = task;
   const [focus, setFocus] = useState(initialState);
   const { type, item } = focus;
   const taskType = task.progress === 100 ? 'done' : 'todo';
@@ -73,7 +73,7 @@ const TaskDetails = ({ task, handleDetailState }: TaskDetailsProps) => {
         onClick={(e) => e.stopPropagation()}
         className={`min-w-[30rem] w-[25%] inset-y-0 right-0 absolute border-l-2 border-slate-200 bg-white overflow-y-scroll pb-10`}
       >
-        <div className="flex flex-col w-full gap-6 px-8 py-10">
+        <div className="flex flex-col w-full gap-5 px-8 py-10">
           <div className="flex items-center justify-between">
             <h3 className="lg:text-h3 text-h4">Task Details</h3>
             <HiOutlineXMark size={25} className="cursor-pointer" onClick={handleDetailState} />
@@ -86,6 +86,9 @@ const TaskDetails = ({ task, handleDetailState }: TaskDetailsProps) => {
           </TaskDetailsLabel>
           <TaskDetailsLabel name="CreatedAt">
             <span className="break-all font-paragraph">{createdAt}</span>
+          </TaskDetailsLabel>
+          <TaskDetailsLabel name="UpdatedAt">
+            <span className="break-all font-paragraph">{updatedAt}</span>
           </TaskDetailsLabel>
           <TaskDetailsLabel name="Progress">
             <div className="flex items-center gap-2 pr-5 rounded w-28 sm:w-40 md:w-48">
@@ -113,7 +116,7 @@ const TaskDetails = ({ task, handleDetailState }: TaskDetailsProps) => {
           )}
         </div>
         <div className="flex items-center w-full gap-2 px-8">
-          <Button name="edit" handler={() => navigate(`/app/edit/${taskType}/${id}`)}>
+          <Button name="edit" handler={() => navigate(`/app/update/${taskType}/${id}`)}>
             Edit
           </Button>
           {difficulty && (

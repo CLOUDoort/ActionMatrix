@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Progress } from '@/components/ui/progress';
 import Tag from '../../ui/Tag';
 import type { Task } from 'Task';
-import TaskDetails from './details/TaskDetails';
+import TaskDetails from '../details/Details';
 import { TiDelete } from 'react-icons/ti';
 import { calcProgressColor } from '@/utils/calcProgressColor';
 import { deleteTask } from '@/services/apiTasks';
