@@ -12,11 +12,10 @@ import { toast } from 'react-toastify';
 import { useCreateSubtask } from './CreateSubtaskContext';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import PriorityForm from './form/PriorityForm';
-import DifficultyForm from './form/DifficultyForm';
 import type { Inputs } from 'Create';
+import TagForm from './form/TagForm';
 
-const CreateTask = () => {
+const CreateTaskForm = () => {
   const navigate = useNavigate();
   const { subtask, clearSubtask } = useCreateSubtask();
   const {
@@ -95,7 +94,7 @@ const CreateTask = () => {
             <DetailsInput register={register} />
           </LabelForm>
           <LabelForm name="Priority">
-            <PriorityForm priority={priority} handlePriority={setPriority} />
+            <TagForm tag="priority" select={priority} handler={setPriority} />
           </LabelForm>
           <LabelForm name="Options">
             <div className="flex gap-2">
@@ -110,7 +109,7 @@ const CreateTask = () => {
                 Divide
               </Button>
             </div>
-            {option && <DifficultyForm difficulty={difficulty} handleDifficulty={setDifficulty} />}
+            {option && <TagForm tag="difficulty" select={difficulty} handler={setDifficulty} />}
           </LabelForm>
           <div className="flex justify-end gap-2">
             <Button name="cancel" handler={handleCancel}>
@@ -127,4 +126,4 @@ const CreateTask = () => {
   );
 };
 
-export default CreateTask;
+export default CreateTaskForm;

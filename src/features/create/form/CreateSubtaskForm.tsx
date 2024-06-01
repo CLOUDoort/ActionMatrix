@@ -5,9 +5,9 @@ import { toast } from 'react-toastify';
 import { nanoid } from 'nanoid';
 import LabelForm from './LabelForm';
 import { DetailsInput, TitleInput } from './InputForm';
-import DifficultyForm from './DifficultyForm';
 import Button from '@/ui/Button';
 import type { CreateSubtaskFormProps, Inputs } from 'Create';
+import TagForm from './TagForm';
 
 const CreateSubtaskForm = ({ priority, handleFormState, update }: CreateSubtaskFormProps) => {
   const { createSubtask, updateSubtask } = useCreateSubtask();
@@ -75,7 +75,7 @@ const CreateSubtaskForm = ({ priority, handleFormState, update }: CreateSubtaskF
           <DetailsInput register={register} />
         </LabelForm>
       </LabelForm>
-      <DifficultyForm difficulty={difficulty} handleDifficulty={setDifficulty} />
+      <TagForm tag="difficulty" select={difficulty} handler={setDifficulty} />
       <div className="flex justify-end gap-2">
         <Button name="cancel" handler={handleReset}>
           Cancel

@@ -4,7 +4,7 @@ import TodoList, { loader as todoLoader } from './features/task/TodoList';
 import { action as editAction, loader as editLoader } from './features/edit/EditTask';
 
 import AppLayout from './ui/AppLayout';
-import CreateTask from './features/create/CreateTask';
+import CreateTaskForm from './features/create/CreateTaskForm';
 import EditTask from './features/edit/EditTask';
 import Home from './ui/Home';
 
@@ -43,7 +43,7 @@ const App = () => {
         },
         {
           path: '/app/create',
-          element: <CreateTask />,
+          element: <CreateTaskForm />,
         },
         {
           path: '/app/edit/:type/:id',

@@ -29,19 +29,15 @@ declare module 'Create' {
     update?: SubtaskItem;
   }
 
-  export interface PriorityFormProps {
-    priority: string;
-    handlePriority: Dispatch<SetStateAction<string>>;
-  }
-
   export interface LabelFormProps {
     name?: string;
     children: ReactNode;
     error?: string;
   }
 
-  export interface DifficultyFormProps {
-    difficulty: string;
-    handleDifficulty: Dispatch<SetStateAction<string>>;
+  export interface TagFormProps {
+    tag: string;
+    select: string;
+    handler: Dispatch<SetStateAction<string>>;
   }
 }
