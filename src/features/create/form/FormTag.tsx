@@ -1,5 +1,5 @@
 import Tag from '@/ui/Tag';
-import { TagFormProps } from 'Create';
+import type { TagFormProps } from 'Create';
 
 const tagTypes: { [key: string]: string[] } = {
   priority: ['high', 'medium', 'low'],

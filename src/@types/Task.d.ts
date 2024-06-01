@@ -24,6 +24,7 @@ declare module 'Task' {
     subtaskNum?: number;
     completedSubtaskNum?: number;
     createdAt: string;
+    updatedAt: string;
   }
 
   export interface Focus {

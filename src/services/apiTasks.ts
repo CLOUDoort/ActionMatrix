@@ -89,7 +89,7 @@ export const finishSubtask = (focus: Focus) => {
   return flag;
 };
 
-export const editTask = (task: Task) => {
+export const updateTask = (task: Task) => {
   let todo = getTasks('todo', null, null);
   let done = getTasks('done', null, null);
 

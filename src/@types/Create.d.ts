@@ -1,6 +1,7 @@
 declare module 'Create' {
   export interface ValueInterface {
     subtask: Subtask;
+    initSubtask: (subtask: Subtask) => void;
     createSubtask: (subtask: SubtaskItem) => void;
     updateSubtask: (pre: SubtaskItem, cur: SubtaskItem) => void;
     deleteSubtask: (subtask: SubtaskItem) => void;

@@ -3,11 +3,11 @@ import { useCreateSubtask } from '../CreateSubtaskContext';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { nanoid } from 'nanoid';
-import LabelForm from './LabelForm';
-import { DetailsInput, TitleInput } from './InputForm';
+import FormLabel from './FormLabel';
+import { DetailsInput, TitleInput } from './FormInput';
 import Button from '@/ui/Button';
 import type { CreateSubtaskFormProps, Inputs } from 'Create';
-import TagForm from './TagForm';
+import FormTag from './FormTag';
 
 const CreateSubtaskForm = ({ priority, handleFormState, update }: CreateSubtaskFormProps) => {
   const { createSubtask, updateSubtask } = useCreateSubtask();
@@ -67,15 +67,15 @@ const CreateSubtaskForm = ({ priority, handleFormState, update }: CreateSubtaskF
       className="w-full p-8 flex flex-col gap-2 border rounded-md border-slate-200 min-w-[25rem]"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <LabelForm>
-        <LabelForm error={errors.title?.message as string}>
+      <FormLabel>
+        <FormLabel error={errors.title?.message as string}>
           <TitleInput register={register} />
-        </LabelForm>
-        <LabelForm error={errors.details?.message as string}>
+        </FormLabel>
+        <FormLabel error={errors.details?.message as string}>
           <DetailsInput register={register} />
-        </LabelForm>
-      </LabelForm>
-      <TagForm tag="difficulty" select={difficulty} handler={setDifficulty} />
+        </FormLabel>
+      </FormLabel>
+      <FormTag tag="difficulty" select={difficulty} handler={setDifficulty} />
       <div className="flex justify-end gap-2">
         <Button name="cancel" handler={handleReset}>
           Cancel

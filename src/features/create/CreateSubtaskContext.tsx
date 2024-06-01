@@ -12,19 +12,27 @@ const initialState = {
 
 const reducer = (state: Subtask, action: ActionInterface): Subtask => {
   switch (action.type) {
+    case 'subtask/init': {
+      return {
+        ...action.payload,
+      };
+    }
     case 'subtask/created': {
+      const newTask = action.payload;
+      const cur = state[newTask.difficulty] ? [...state[newTask.difficulty], newTask] : [newTask];
       return {
         ...state,
-        [action.payload.difficulty]: [...state[action.payload.difficulty], action.payload],
+        [action.payload.difficulty]: cur,
       };
     }
     case 'subtask/updated': {
       const { prev, cur } = action.payload;
+      const curArray = state[cur.difficulty] ? [...state[cur.difficulty], cur] : [cur];
       if (prev.difficulty !== cur.difficulty) {
         return {
           ...state,
           [prev.difficulty]: state[prev.difficulty].filter((el) => el.id !== prev.id),
-          [cur.difficulty]: [...state[cur.difficulty], cur], // 새로운 난이도 배열에 추가
+          [cur.difficulty]: curArray,
         };
       }
       return {
@@ -48,6 +56,13 @@ const reducer = (state: Subtask, action: ActionInterface): Subtask => {
 
 const CreateSubtaskContextProvider = ({ children }: { children: ReactNode }) => {
   const [subtask, dispatch] = useReducer(reducer, initialState);
+
+  const initSubtask = (subtask: Subtask) => {
+    dispatch({
+      type: 'subtask/init',
+      payload: subtask,
+    });
+  };
 
   const createSubtask = (subtask: SubtaskItem) => {
     dispatch({
@@ -80,7 +95,9 @@ const CreateSubtaskContextProvider = ({ children }: { children: ReactNode }) => 
   };
 
   return (
-    <CreateSubtaskContext.Provider value={{ subtask, createSubtask, updateSubtask, deleteSubtask, clearSubtask }}>
+    <CreateSubtaskContext.Provider
+      value={{ subtask, initSubtask, createSubtask, updateSubtask, deleteSubtask, clearSubtask }}
+    >
       {children}
     </CreateSubtaskContext.Provider>
   );

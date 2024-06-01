@@ -1,4 +1,4 @@
-import { LabelFormProps } from 'Create';
+import type { LabelFormProps } from 'Create';
 
 const LabelForm = ({ name, children, error }: LabelFormProps) => {
   return (

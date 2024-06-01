@@ -1,11 +1,11 @@
 import DoneList, { loader as doneLoader } from './features/task/DoneList';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import TodoList, { loader as todoLoader } from './features/task/TodoList';
-import { action as editAction, loader as editLoader } from './features/edit/EditTask';
+import { loader as updateLoader } from './features/update/UpdateTask';
 
 import AppLayout from './ui/AppLayout';
-import CreateTaskForm from './features/create/CreateTaskForm';
-import EditTask from './features/edit/EditTask';
+import CreateTask from './features/create/CreateTask';
+import UpdateTask from './features/update/UpdateTask';
 import Home from './ui/Home';
 
 const App = () => {
@@ -43,13 +43,12 @@ const App = () => {
         },
         {
           path: '/app/create',
-          element: <CreateTaskForm />,
+          element: <CreateTask />,
         },
         {
-          path: '/app/edit/:type/:id',
-          element: <EditTask />,
-          loader: editLoader,
-          action: editAction,
+          path: '/app/update/:type/:id',
+          element: <UpdateTask />,
+          loader: updateLoader,
         },
       ],
     },
