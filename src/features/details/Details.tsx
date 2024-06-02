@@ -6,12 +6,12 @@ import FocusTask from '../focus/FocusTask';
 import { HiOutlineXMark } from 'react-icons/hi2';
 import { Progress } from '@/components/ui/progress';
 import Tag from '@/ui/Tag';
-import TaskDetailsLabel from './DetailsLabel';
 import TaskDetailsSubtask from './DetailsSubtask';
 import { calcProgressColor } from '@/utils/calcProgressColor';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import ItemLabel from '@/ui/ItemLabel';
 
 const initialState = {
   type: '',
@@ -78,35 +78,35 @@ const TaskDetails = ({ task, handleDetailState }: TaskDetailsProps) => {
             <h3 className="lg:text-h3 text-h4">Task Details</h3>
             <HiOutlineXMark size={25} className="cursor-pointer" onClick={handleDetailState} />
           </div>
-          <TaskDetailsLabel name="Title">
+          <ItemLabel name="Title">
             <span className="flex-1 font-paragraph">{title}</span>
-          </TaskDetailsLabel>
-          <TaskDetailsLabel name="Details">
+          </ItemLabel>
+          <ItemLabel name="Details">
             <span className="break-all font-paragraph">{details}</span>
-          </TaskDetailsLabel>
-          <TaskDetailsLabel name="CreatedAt">
+          </ItemLabel>
+          <ItemLabel name="CreatedAt">
             <span className="break-all font-paragraph">{createdAt}</span>
-          </TaskDetailsLabel>
-          <TaskDetailsLabel name="UpdatedAt">
+          </ItemLabel>
+          <ItemLabel name="UpdatedAt">
             <span className="break-all font-paragraph">{updatedAt}</span>
-          </TaskDetailsLabel>
-          <TaskDetailsLabel name="Progress">
+          </ItemLabel>
+          <ItemLabel name="Progress">
             <div className="flex items-center gap-2 pr-5 rounded w-28 sm:w-40 md:w-48">
               <Progress value={progress} indicatorColor={progressColor} />
               <span className="font-paragraph">{progress}%</span>
             </div>
-          </TaskDetailsLabel>
-          <TaskDetailsLabel name="Priority">
+          </ItemLabel>
+          <ItemLabel name="Priority">
             <span className="font-paragraph">
               <Tag type={priority} button={false} />
             </span>
-          </TaskDetailsLabel>
+          </ItemLabel>
           {difficulty && (
-            <TaskDetailsLabel name="Difficulty">
+            <ItemLabel name="Difficulty">
               <span className="font-paragraph">
                 <Tag type={difficulty} button={false} />
               </span>
-            </TaskDetailsLabel>
+            </ItemLabel>
           )}
           {subtask && (
             <div className="flex flex-col gap-7">
