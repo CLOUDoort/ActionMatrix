@@ -79,16 +79,16 @@ const TaskDetails = ({ task, handleDetailState }: TaskDetailsProps) => {
             <HiOutlineXMark size={25} className="cursor-pointer" onClick={handleDetailState} />
           </div>
           <ItemLabel name="Title">
-            <span className="flex-1 font-paragraph">{title}</span>
+            <span className="font-paragraph">{title}</span>
           </ItemLabel>
           <ItemLabel name="Details">
             <span className="break-all font-paragraph">{details}</span>
           </ItemLabel>
           <ItemLabel name="CreatedAt">
-            <span className="break-all font-paragraph">{createdAt}</span>
+            <span className="font-paragraph">{createdAt}</span>
           </ItemLabel>
           <ItemLabel name="UpdatedAt">
-            <span className="break-all font-paragraph">{updatedAt}</span>
+            <span className="font-paragraph">{updatedAt}</span>
           </ItemLabel>
           <ItemLabel name="Progress">
             <div className="flex items-center gap-2 pr-5 rounded w-28 sm:w-40 md:w-48">
@@ -109,7 +109,7 @@ const TaskDetails = ({ task, handleDetailState }: TaskDetailsProps) => {
             </ItemLabel>
           )}
           {subtask && (
-            <div className="flex flex-col gap-7">
+            <div className="flex flex-col gap-5">
               <span className="w-20 text-h5">Subtask</span>
               <TaskDetailsSubtask subtask={subtask} handler={focusHandler} />
             </div>
