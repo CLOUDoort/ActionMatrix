@@ -8,17 +8,20 @@ import { TiDelete } from 'react-icons/ti';
 import { calcProgressColor } from '@/utils/calcProgressColor';
 import { deleteTask } from '@/services/apiTasks';
 import { useNavigate } from 'react-router-dom';
+import { filterSubtask } from '@/utils/filterSubtask';
 
 const TaskItem = ({ type, task }: { type: string; task: Task }) => {
   const { title, progress, priority, difficulty, subtask } = task;
   const [detailsState, setDetailsState] = useState<boolean>(false);
   const handleDetailState = () => setDetailsState((state) => !state);
   const navigation = useNavigate();
+  const progressColor = calcProgressColor(progress);
+  const filtered = subtask && filterSubtask(subtask);
+
   const clickDelete = () => {
     deleteTask(type, task.id);
     navigation(`/app/${type}`);
   };
-  const progressColor = calcProgressColor(progress);
   return (
     <>
       <div className="flex items-center justify-between w-full px-3 transition-colors border-b-2 font-paragraph hover:bg-slate-200/50">
@@ -39,17 +42,13 @@ const TaskItem = ({ type, task }: { type: string; task: Task }) => {
               <Tag type={difficulty} button={false} />
             </div>
           )}
-          {subtask && (
+          {filtered && (
             <div className="items-center hidden gap-2 xl:flex xl:w-48">
-              {Object.entries(subtask)
-                .filter(([_, value]) => value.length !== 0)
-                .map(([key, value]: any) => {
-                  return (
-                    <React.Fragment key={key}>
-                      <Tag type={key} button={false} /> x {value.length}
-                    </React.Fragment>
-                  );
-                })}
+              {filtered.map((key: string) => (
+                <React.Fragment key={key}>
+                  <Tag type={key} button={false} /> x {subtask[key].length}
+                </React.Fragment>
+              ))}
             </div>
           )}
         </div>
