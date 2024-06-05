@@ -1,12 +1,12 @@
 import Tag from '@/ui/Tag';
-import type { TagFormProps } from 'Create';
+import type { FormTagProps } from 'Create';
 
 const tagTypes: { [key: string]: string[] } = {
   priority: ['high', 'medium', 'low'],
   difficulty: ['hard', 'normal', 'easy'],
 };
 
-const TagForm = ({ tag, handler, select }: TagFormProps) => {
+const FormTag = ({ tag, handler, select }: FormTagProps) => {
   return (
     <div className="flex gap-2">
       {tagTypes[tag].map((el) => (
@@ -16,4 +16,4 @@ const TagForm = ({ tag, handler, select }: TagFormProps) => {
   );
 };
 
-export default TagForm;
+export default FormTag;

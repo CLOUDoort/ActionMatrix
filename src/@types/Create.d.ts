@@ -30,13 +30,13 @@ declare module 'Create' {
     update?: SubtaskItem;
   }
 
-  export interface LabelFormProps {
+  export interface FormLabelProps {
     name?: string;
     children: ReactNode;
     error?: string;
   }
 
-  export interface TagFormProps {
+  export interface FormTagProps {
     tag: string;
     select: string;
     handler: Dispatch<SetStateAction<string>>;

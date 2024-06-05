@@ -1,6 +1,6 @@
-import type { LabelFormProps } from 'Create';
+import type { FormLabelProps } from 'Create';
 
-const LabelForm = ({ name, children, error }: LabelFormProps) => {
+const FormLabel = ({ name, children, error }: FormLabelProps) => {
   return (
     <div className={`flex flex-col gap-2`}>
       {name && (
@@ -14,4 +14,4 @@ const LabelForm = ({ name, children, error }: LabelFormProps) => {
   );
 };
 
-export default LabelForm;
+export default FormLabel;
