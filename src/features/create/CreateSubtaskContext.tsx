@@ -1,8 +1,8 @@
-import type { ActionInterface, ValueInterface } from 'Create';
-import type { Subtask, SubtaskItem } from 'Task';
 import { ReactNode, createContext, useContext, useReducer } from 'react';
+import type { Subtask, SubtaskItem } from 'Task';
+import type { SubtaskAction, SubtaskValue } from 'Create';
 
-const CreateSubtaskContext = createContext<ValueInterface | null>(null);
+const CreateSubtaskContext = createContext<SubtaskValue | null>(null);
 
 const initialState = {
   hard: [],
@@ -10,7 +10,7 @@ const initialState = {
   easy: [],
 };
 
-const reducer = (state: Subtask, action: ActionInterface): Subtask => {
+const reducer = (state: Subtask, action: SubtaskAction): Subtask => {
   switch (action.type) {
     case 'subtask/init': {
       return {

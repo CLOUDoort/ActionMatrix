@@ -1,5 +1,5 @@
 declare module 'Create' {
-  export interface ValueInterface {
+  export interface SubtaskValue {
     subtask: Subtask;
     initSubtask: (subtask: Subtask) => void;
     createSubtask: (subtask: SubtaskItem) => void;
@@ -8,7 +8,7 @@ declare module 'Create' {
     clearSubtask: () => void;
   }
 
-  export type ActionInterface = {
+  export type SubtaskAction = {
     type: string;
     payload?: any;
   };
