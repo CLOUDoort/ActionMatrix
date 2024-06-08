@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 const base =
   'flex items-center gap-2 text-xs px-3 sm:text-base whitespace-nowrap py-2 sm:min-w-[5rem] rounded transition-all';
@@ -34,8 +35,9 @@ type PropsType = {
 };
 
 const Button = ({ name, children, handler, disabled = false, conditionStyle = '', type = 'button' }: PropsType) => {
+  const style = twMerge(styles[name], conditionStyle);
   return (
-    <button type={type} onClick={handler} disabled={disabled} className={`${styles[name]} ${conditionStyle}`}>
+    <button type={type} onClick={handler} disabled={disabled} className={style}>
       {children}
     </button>
   );
