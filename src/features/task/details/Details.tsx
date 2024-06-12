@@ -1,9 +1,10 @@
 import type { Focus, Task } from 'Task';
-import { finishSubtask, finishTask } from '@/services/apiTasks';
 
 import Button from '@/ui/Button';
-import FocusTask from '../focus/FocusTask';
+import FocusTask from '../../focus/FocusTask';
 import { HiOutlineXMark } from 'react-icons/hi2';
+import ItemLabel from '@/ui/ItemLabel';
+import Modal from '@/ui/Modal';
 import { Progress } from '@/components/ui/progress';
 import Tag from '@/ui/Tag';
 import TaskDetailsSubtask from './DetailsSubtask';
@@ -11,7 +12,8 @@ import { calcProgressColor } from '@/utils/calcProgressColor';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import ItemLabel from '@/ui/ItemLabel';
+import { useFinishTask } from '@/features/focus/useFinishTask';
+import { useFinishSubtask } from '@/features/focus/useFinishSubtask';
 
 const initialState = {
   type: '',
@@ -50,14 +52,15 @@ const TaskDetails = ({ task, handleDetailState }: TaskDetailsProps) => {
 
   const focusHandler = (type: string, item: Focus) => setFocus({ type, item });
 
-  const finishHandler = () => {
+  const finishHandler = async () => {
     if (type === 'task') {
-      finishTask(item);
+      await useFinishTask(item);
       navigate('/app/done');
       toast.success(`Finish ${item.title}`);
     } else {
       // subtask가 모두 끝났을 때
-      if (finishSubtask(item)) {
+      const flag = await useFinishSubtask(item);
+      if (flag) {
         navigate('/app/done');
         toast.success(`Finish ${title}`);
       } else {
@@ -68,10 +71,10 @@ const TaskDetails = ({ task, handleDetailState }: TaskDetailsProps) => {
     setFocus(initialState);
   };
   return (
-    <div className={`absolute inset-0 z-10 bg-black/20`} onClick={handleDetailState}>
+    <Modal handler={handleDetailState}>
       <div
         onClick={(e) => e.stopPropagation()}
-        className={`min-w-[30rem] w-[25%] inset-y-0 right-0 absolute border-l-2 border-slate-200 bg-white overflow-y-scroll pb-10`}
+        className={`min-w-[22rem] max-w-[35rem] w-[30%] inset-y-0 right-0 absolute border-l-2 border-slate-200 bg-white overflow-y-scroll pb-10`}
       >
         <div className="flex flex-col w-full gap-5 px-8 py-10">
           <div className="flex items-center justify-between">
@@ -110,7 +113,7 @@ const TaskDetails = ({ task, handleDetailState }: TaskDetailsProps) => {
           )}
           {subtask && (
             <div className="flex flex-col gap-5">
-              <span className="w-20 text-h5">Subtask</span>
+              <span className="w-20 font-semibold text-h5">Subtask</span>
               <TaskDetailsSubtask subtask={subtask} handler={focusHandler} />
             </div>
           )}
@@ -132,7 +135,7 @@ const TaskDetails = ({ task, handleDetailState }: TaskDetailsProps) => {
         </div>
       </div>
       {focus.type !== '' && <FocusTask handleFinish={finishHandler} focus={focus.item} />}
-    </div>
+    </Modal>
   );
 };
 
