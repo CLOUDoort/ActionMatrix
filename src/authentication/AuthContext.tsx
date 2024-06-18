@@ -17,6 +17,7 @@ const reducer = (state: Auth, action: AuthAction): Auth => {
   switch (action.type) {
     case 'auth/demo': {
       return {
+        ...state,
         version: 'demo',
         user: {
           name: 'demo',
@@ -28,6 +29,7 @@ const reducer = (state: Auth, action: AuthAction): Auth => {
       if (!action.payload) throw new Error('User information is required');
       const { name, avatarUrl } = action.payload;
       return {
+        ...state,
         version: 'login',
         user: {
           name,

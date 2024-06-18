@@ -1,21 +1,18 @@
 import supabase from '@/services/supabase';
-import { toast } from 'react-toastify';
 
-export const googleLogin = async () => {
-  const { data, error } = await supabase.auth.signInWithOAuth({
+export const googleLogin = async (): Promise<void> => {
+  const redirectTo = import.meta.env.VITE_REDIRECT_URL;
+
+  const { error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
       queryParams: {
         access_type: 'offline',
         prompt: 'consent',
       },
-      redirectTo: 'http://localhost:5174/app/todo',
+      redirectTo,
     },
   });
 
-  if (data) {
-    toast.success('Login successful!');
-    console.log('Login', data);
-  }
-  if (error) console.error(error.message);
+  if (error) throw new Error(`Google Login Error: ${error.message}`);
 };
