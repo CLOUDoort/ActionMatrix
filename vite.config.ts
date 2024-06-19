@@ -22,5 +22,17 @@ export default defineConfig(({ command, mode }) => {
     server: {
       port: 5173,
     },
+    build: {
+      sourcemap: true,
+
+      rollupOptions: {
+        onLog(level, log: any, handler) {
+          if (log.cause && log.cause.message === `Can't resolve original location of error.`) {
+            return;
+          }
+          handler(level, log);
+        },
+      },
+    },
   };
 });
