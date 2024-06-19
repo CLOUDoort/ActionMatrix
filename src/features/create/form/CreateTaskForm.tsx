@@ -1,26 +1,30 @@
 import { DetailsInput, TitleInput } from './FormInput';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { calcCompletedNum, calcSubtaskNum } from '@/utils/calcSubtaskNum';
 
 import Button from '../../../ui/Button';
 import CreateSubtask from '../CreateSubtask';
 import FormLabel from '@/features/create/form/FormLabel';
-import { createTask } from '../../../services/apiCreateTask';
+import FormTag from './FormTag';
+import type { Inputs } from 'Create';
+import type { Task } from 'Task';
+import { assignTaskId } from '@/utils/assignTaskId';
 import { formattedDate } from '@/utils/formattedDate';
 import { nanoid } from 'nanoid';
 import { toast } from 'react-toastify';
 import { useCreateSubtask } from '../CreateSubtaskContext';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import type { Inputs } from 'Create';
-import FormTag from './FormTag';
-import { assignTaskId } from '@/utils/assignTaskId';
-import { calcCompletedNum, calcSubtaskNum } from '@/utils/calcSubtaskNum';
-import type { Task } from 'Task';
-import { updateTask } from '@/services/apiTasks';
+import { useCreateTask, useUpdateTask } from '../queries';
 
 const CreateTaskForm = ({ update }: { update?: Task }) => {
   const navigate = useNavigate();
+  const origin = update?.progress === 100 ? 'done' : 'todo';
+  const version = localStorage.getItem('version')!;
+  const { mutate: createTask } = useCreateTask(version, 'todo');
+  const { mutate: updateTask } = useUpdateTask(version, origin);
   const { subtask, clearSubtask } = useCreateSubtask();
+
   const {
     register,
     handleSubmit,
@@ -50,7 +54,7 @@ const CreateTaskForm = ({ update }: { update?: Task }) => {
     navigate(-1);
   };
 
-  const onSubmit: SubmitHandler<Inputs> = ({ title, details }) => {
+  const onSubmit: SubmitHandler<Inputs> = async ({ title, details }) => {
     if (!title || !details) {
       toast.error('Not enough content!');
       return null;
@@ -58,9 +62,9 @@ const CreateTaskForm = ({ update }: { update?: Task }) => {
 
     // update
     if (update) {
-      const { id, createdAt, difficulty, progress } = update;
+      const { id, userId, createdAt, difficulty, progress } = update;
       const updatedAt = formattedDate(new Date());
-      const base = { id, title, details, priority, createdAt, updatedAt };
+      const base = { id, userId, title, details, priority, createdAt, updatedAt };
       let task;
       if (option) task = { ...base, difficulty, progress: Number(progress) };
       else {
@@ -76,13 +80,23 @@ const CreateTaskForm = ({ update }: { update?: Task }) => {
           completedSubtaskNum,
         };
       }
-      const next = updateTask(task);
-      toast.success('Edit Task!');
-      navigate(`/app/${next}`);
+      const next = task.progress === 100 ? 'done' : 'todo';
+      updateTask(task);
+      navigate(`/app/task/${next}`);
     } else {
       const taskId = nanoid(8);
+      const userId = localStorage.getItem('userId')!;
       const createdAt = formattedDate(new Date());
-      const base = { id: taskId, title, details, priority, progress: 0, createdAt, updatedAt: createdAt };
+      const base = {
+        id: taskId,
+        userId,
+        title,
+        details,
+        priority,
+        progress: 0,
+        createdAt,
+        updatedAt: createdAt,
+      };
 
       let task;
       if (option && difficulty) task = { ...base, difficulty };
@@ -95,10 +109,8 @@ const CreateTaskForm = ({ update }: { update?: Task }) => {
         task = { ...base, subtask: assignTaskId(subtask, taskId), subtaskNum, completedSubtaskNum: 0 };
       }
 
-      createTask('todo', task);
-
-      toast.success('Create Task!');
-      navigate('/app/todo');
+      createTask(task);
+      navigate('/app/task/todo');
     }
     handleReset();
   };
