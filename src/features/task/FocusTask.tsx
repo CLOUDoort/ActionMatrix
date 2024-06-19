@@ -1,20 +1,18 @@
 import Button from '@/ui/Button';
 import type { Focus } from 'Task';
-import Tag from '@/ui/Tag';
 import ItemLabel from '@/ui/ItemLabel';
+import Tag from '@/ui/Tag';
+import Modal from '@/ui/Modal';
 
 const FocusTask = ({ focus, handleFinish }: { focus: Focus; handleFinish: () => void }) => {
   const { title, details, priority, difficulty } = focus;
 
   return (
-    <div
-      className="absolute inset-0 z-50 flex items-center justify-center bg-black/20"
-      onClick={(e) => e.stopPropagation()}
-    >
-      <div className="flex flex-col justify-between items-center bg-slate-50 max-w-[37.5rem] min-w-[25rem] min-h-[30rem] max-h-[40.625rem] w-[50%] h-[70%] rounded py-8 px-10">
+    <Modal handler={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => e.stopPropagation()}>
+      <div className="flex flex-col justify-between items-center bg-slate-50 absolute w-[50%] h-[70%] max-w-[37.5rem] min-h-[30rem] max-h-[40.625rem] min-w-[22rem] rounded-lg py-8 px-10">
         <div className="flex items-center justify-end w-full gap-2">
           <div className="flex flex-col w-full gap-7">
-            <h1 className="text-[3.5rem] text-center mb-3">FOCUS</h1>
+            <h1 className="xl:text-[3rem] lg:text-[2.5rem] text-h3 text-center mb-3">FOCUS</h1>
             <ItemLabel name="Title">
               <span className="flex-1 font-paragraph">{title}</span>
             </ItemLabel>
@@ -37,7 +35,7 @@ const FocusTask = ({ focus, handleFinish }: { focus: Focus; handleFinish: () => 
           Finish
         </Button>
       </div>
-    </div>
+    </Modal>
   );
 };
 
