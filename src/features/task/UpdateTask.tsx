@@ -1,14 +1,22 @@
 import { LoaderFunction, useLoaderData } from 'react-router-dom';
-import { getTask } from '@/services/apiTasks';
-import { useEffect } from 'react';
+
 import CreateTaskForm from '../create/form/CreateTaskForm';
 import { useCreateSubtask } from '../create/CreateSubtaskContext';
+import { useEffect } from 'react';
+import Loader from '@/ui/Loader';
+import { useGetTask } from './queries';
 
 const UpdateTask = () => {
-  const task: any = useLoaderData();
+  const { version, type, id }: any = useLoaderData();
   const { initSubtask } = useCreateSubtask();
+  const { isLoading, task } = useGetTask(version, type as string, id as string);
 
-  useEffect(() => initSubtask(task.subtask), []);
+  useEffect(() => {
+    if (!task || task.subtask === undefined) return;
+    initSubtask(task.subtask);
+  }, []);
+
+  if (isLoading) return <Loader />;
 
   return (
     <section className="flex flex-col w-full max-h-[50rem] gap-3 px-5 py-9 lg:px-14 max-w-7xl">
@@ -20,9 +28,11 @@ const UpdateTask = () => {
   );
 };
 
-export const loader: LoaderFunction<any> = ({ params }: any) => {
-  const task = getTask(params.type, params.id);
-  return task;
+export const loader: LoaderFunction<any> = ({ params }) => {
+  const { type, id } = params;
+  const version = localStorage.getItem('version')!;
+
+  return { version, type, id };
 };
 
 export default UpdateTask;
