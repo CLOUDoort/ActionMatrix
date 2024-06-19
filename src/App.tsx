@@ -1,54 +1,48 @@
-import DoneList, { loader as doneLoader } from './features/task/DoneList';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import TodoList, { loader as todoLoader } from './features/task/TodoList';
-import { loader as updateLoader } from './features/update/UpdateTask';
+import TodoList, { loader as taskLoader } from './features/task/TaskList';
 
 import AppLayout from './ui/AppLayout';
 import CreateTask from './features/create/CreateTask';
-import UpdateTask from './features/update/UpdateTask';
+import ErrorBoundary from './ui/ErrorBoundary';
 import Home from './ui/Home';
+import UpdateTask from './features/task/UpdateTask';
+import { loader as updateLoader } from './features/task/UpdateTask';
 
 const App = () => {
   const router = createBrowserRouter([
     {
       path: '/',
       element: <Home />,
+      errorElement: <ErrorBoundary />,
     },
     {
       element: <AppLayout />,
+      errorElement: <ErrorBoundary />,
       children: [
         {
-          path: '/app/todo',
+          path: '/app/task/:type',
           element: <TodoList />,
-          loader: todoLoader,
+          loader: taskLoader,
+          errorElement: <ErrorBoundary />,
           children: [
             {
               path: ':priority/:difficulty',
               element: <TodoList />,
-              loader: todoLoader,
+              loader: taskLoader,
+              errorElement: <ErrorBoundary />,
             },
           ],
-        },
-        {
-          path: '/app/done',
-          element: <DoneList />,
-          loader: doneLoader,
-          children: [
-            {
-              path: ':priority/:difficulty',
-              element: <DoneList />,
-              loader: doneLoader,
-            },
-          ],
-        },
-        {
-          path: '/app/create',
-          element: <CreateTask />,
         },
         {
           path: '/app/update/:type/:id',
           element: <UpdateTask />,
           loader: updateLoader,
+          errorElement: <ErrorBoundary />,
+        },
+        {
+          path: '/app/create',
+          element: <CreateTask />,
+          errorElement: <ErrorBoundary />,
         },
       ],
     },
