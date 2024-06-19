@@ -2,10 +2,23 @@ import Button from './Button';
 import { FcGoogle } from 'react-icons/fc';
 import HomeFeature from './HomeFeature';
 import { googleLogin } from '@/authentication/googleLogin';
+import { useLocalStorageState } from '@/hooks/useLocalStorageState';
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const navigate = useNavigate();
+  const [_, setVersion] = useLocalStorageState('version', '');
+
+  const clickDemo = () => {
+    setVersion('demo');
+    navigate('/app/task/todo');
+  };
+
+  const clickGoogleLogin = () => {
+    setVersion('user');
+    googleLogin();
+  };
+
   return (
     <div className="flex flex-col items-center w-full">
       <div className="max-w-7xl min-w-[22rem]">
@@ -23,10 +36,10 @@ const Home = () => {
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-5 sm:mb-10">
-            <Button handler={() => navigate('/app/todo')} name="try">
+            <Button handler={clickDemo} name="try">
               Try a Demo
             </Button>
-            <Button handler={googleLogin} name="google">
+            <Button handler={clickGoogleLogin} name="google">
               <div className="flex items-center justify-center gap-3 whitespace-nowrap">
                 <FcGoogle className="size-4 lg:size-5" /> Start with Google
               </div>
@@ -40,7 +53,7 @@ const Home = () => {
           <HomeFeature />
 
           <footer className="flex items-center justify-center py-5 text-xs sm:text-base">
-            Copyright 2024. KangJunSeok All rights reserved.
+            Copyright 2024. KangJunSeok All Rights Reserved.
           </footer>
         </main>
       </div>
