@@ -1,9 +1,10 @@
-import { Link, isRouteErrorResponse, useRouteError } from 'react-router-dom';
+import { Link, isRouteErrorResponse, useNavigate, useRouteError } from 'react-router-dom';
 
 import { TiArrowBack } from 'react-icons/ti';
 
 const ErrorBoundary = () => {
   const error = useRouteError();
+  const navigate = useNavigate();
   let errorMessage: string;
 
   if (isRouteErrorResponse(error)) {
@@ -14,16 +15,15 @@ const ErrorBoundary = () => {
   } else if (typeof error === 'string') {
     errorMessage = error;
   } else {
-    console.error(error);
     errorMessage = 'Unknown error';
   }
 
   return (
-    <div className="absolute inset-0 flex items-center justify-center">
+    <div className="flex items-center justify-center w-full h-screen">
       <div className="flex flex-col items-center justify-center max-w-[70%] gap-5">
         <h3 className="text-h3">Something went wrong 😢</h3>
         <p className="font-paragraph">{errorMessage}</p>
-        <Link to="/" replace className="flex items-center gap-2">
+        <Link to="/" replace onClick={() => navigate(-1)} className="flex items-center gap-2">
           <TiArrowBack size={25} />
           <span>Go back</span>
         </Link>
