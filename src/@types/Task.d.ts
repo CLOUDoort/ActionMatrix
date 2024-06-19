@@ -15,6 +15,7 @@ declare module 'Task' {
 
   export interface Task {
     id: string;
+    userId: string;
     title: string;
     details: string;
     priority: string;
