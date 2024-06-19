@@ -1,27 +1,23 @@
 import React, { useState } from 'react';
+import type { Task } from 'Task';
 
 import { Progress } from '@/components/ui/progress';
 import Tag from '../../ui/Tag';
-import type { Task } from 'Task';
-import TaskDetails from '../details/Details';
+import TaskDetails from './details/Details';
 import { TiDelete } from 'react-icons/ti';
 import { calcProgressColor } from '@/utils/calcProgressColor';
-import { deleteTask } from '@/services/apiTasks';
-import { useNavigate } from 'react-router-dom';
 import { filterSubtask } from '@/utils/filterSubtask';
+import { useDeleteTask } from './queries';
 
-const TaskItem = ({ type, task }: { type: string; task: Task }) => {
+const TaskItem = ({ version, type, task }: { version: string; type: string; task: Task }) => {
   const { title, progress, priority, difficulty, subtask } = task;
   const [detailsState, setDetailsState] = useState<boolean>(false);
-  const handleDetailState = () => setDetailsState((state) => !state);
-  const navigation = useNavigate();
   const progressColor = calcProgressColor(progress);
   const filtered = subtask && filterSubtask(subtask);
 
-  const clickDelete = () => {
-    deleteTask(type, task.id);
-    navigation(`/app/${type}`);
-  };
+  const handleDetailState = () => setDetailsState((state) => !state);
+  const { mutate: deleteTask } = useDeleteTask(version, type, task.id);
+
   return (
     <>
       <div className="flex items-center justify-between w-full px-3 transition-colors border-b-2 font-paragraph hover:bg-slate-200/50">
@@ -52,7 +48,7 @@ const TaskItem = ({ type, task }: { type: string; task: Task }) => {
             </div>
           )}
         </div>
-        <TiDelete className="cursor-pointer" size={25} onClick={clickDelete} />
+        <TiDelete className="cursor-pointer" size={25} onClick={() => deleteTask()} />
       </div>
       {detailsState && <TaskDetails task={task} handleDetailState={handleDetailState} />}
     </>

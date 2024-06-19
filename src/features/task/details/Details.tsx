@@ -1,7 +1,7 @@
 import type { Focus, Task } from 'Task';
 
 import Button from '@/ui/Button';
-import FocusTask from '../../focus/FocusTask';
+import FocusTask from '../FocusTask';
 import { HiOutlineXMark } from 'react-icons/hi2';
 import ItemLabel from '@/ui/ItemLabel';
 import Modal from '@/ui/Modal';
@@ -12,8 +12,7 @@ import { calcProgressColor } from '@/utils/calcProgressColor';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { useFinishTask } from '@/features/focus/useFinishTask';
-import { useFinishSubtask } from '@/features/focus/useFinishSubtask';
+import { useFinishSubtask, useFinishTask } from '../queries';
 
 const initialState = {
   type: '',
@@ -33,12 +32,17 @@ interface TaskDetailsProps {
 }
 
 const TaskDetails = ({ task, handleDetailState }: TaskDetailsProps) => {
-  const { id, title, details, progress, priority, difficulty, subtask, createdAt, updatedAt } = task;
+  const navigate = useNavigate();
   const [focus, setFocus] = useState(initialState);
+  const version = localStorage.getItem('version')!;
+
+  const { mutate: finishTask } = useFinishTask(version);
+  const { mutate: finishSubtask } = useFinishSubtask(version);
+
+  const { id, title, details, progress, priority, difficulty, subtask, createdAt, updatedAt } = task;
   const { type, item } = focus;
   const taskType = task.progress === 100 ? 'done' : 'todo';
   const isComplete = progress === 100;
-  const navigate = useNavigate();
   const focusTask: Focus = {
     id,
     taskId: id,
@@ -47,24 +51,22 @@ const TaskDetails = ({ task, handleDetailState }: TaskDetailsProps) => {
     priority,
     difficulty: difficulty !== undefined ? difficulty : '',
   };
-
   const progressColor = calcProgressColor(progress);
 
   const focusHandler = (type: string, item: Focus) => setFocus({ type, item });
 
-  const finishHandler = async () => {
+  const finishHandler = () => {
     if (type === 'task') {
-      await useFinishTask(item);
-      navigate('/app/done');
+      finishTask(item);
+      navigate('/app/task/done');
       toast.success(`Finish ${item.title}`);
     } else {
-      // subtask가 모두 끝났을 때
-      const flag = await useFinishSubtask(item);
+      finishSubtask(item);
+      const flag = task?.completedSubtaskNum! + 1 === task?.subtaskNum ? true : false;
       if (flag) {
-        navigate('/app/done');
         toast.success(`Finish ${title}`);
+        navigate('/app/task/done');
       } else {
-        navigate('/app/todo');
         toast.success(`Finish ${item.title}`);
       }
     }
