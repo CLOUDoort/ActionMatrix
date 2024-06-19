@@ -42,7 +42,7 @@ export const createDemoTask = (type: string, task: Task): void => {
   saveTasksToStorage(type, [...tasks, task]);
 };
 
-export const updateDemoTask = (origin: string, task: Task): string => {
+export const updateDemoTask = (origin: string, task: Task) => {
   let todo = getTasksFromStorage('todo');
   let done = getTasksFromStorage('done');
   task.updatedAt = formattedDate(new Date());
@@ -55,24 +55,17 @@ export const updateDemoTask = (origin: string, task: Task): string => {
     return [from, to];
   };
 
-  let result;
   // done으로 이동
   if (task.progress === 100) {
     if (origin === 'done') done = updateTaskList(done, task);
     else [todo, done] = moveTaskBetweenLists(todo, done, task);
-
-    result = 'done';
   } else {
     if (origin === 'todo') todo = updateTaskList(todo, task);
     else [done, todo] = moveTaskBetweenLists(done, todo, task);
-
-    result = 'todo';
   }
 
   saveTasksToStorage('todo', todo);
   saveTasksToStorage('done', done);
-
-  return result;
 };
 
 export const deleteDemoTask = (type: string, taskId: string): void => {
@@ -85,14 +78,13 @@ export const deleteDemoTask = (type: string, taskId: string): void => {
 export const finishDemoTask = (focus: Focus) => {
   const todo = getTasksFromStorage('todo').filter((el: Task) => el.id !== focus.id);
   const task = getDemoTask('todo', focus.id);
-  task.progress = 100;
-  const done = [...getTasksFromStorage('done'), task];
+  const done = [...getTasksFromStorage('done'), { ...task, progress: 100 }];
 
   saveTasksToStorage('todo', todo);
   saveTasksToStorage('done', done);
 };
 
-export const finishDemoSubtask = (focus: Focus): boolean => {
+export const finishDemoSubtask = (focus: Focus) => {
   let todo = getTasksFromStorage('todo');
   let done = getTasksFromStorage('done');
 
@@ -107,20 +99,14 @@ export const finishDemoSubtask = (focus: Focus): boolean => {
 
   task.completedSubtaskNum++;
 
-  let flag = false;
   // 모든 subtask 완료
   if (task.subtaskNum === task.completedSubtaskNum) {
-    task.progress = 100;
-    done = [...done, task];
+    done = [...done, { ...task, progress: 100 }];
     todo = todo.filter((el: Task) => el.id !== task.id);
     saveTasksToStorage('done', done);
-    saveTasksToStorage('todo', todo);
-    flag = true;
   } else {
     task.progress = Math.trunc((task.completedSubtaskNum / task.subtaskNum) * 100);
     todo = todo.map((el: Task) => (el.id === task.id ? task : el));
-    saveTasksToStorage('todo', todo);
   }
-
-  return flag;
+  saveTasksToStorage('todo', todo);
 };
