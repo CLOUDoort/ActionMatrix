@@ -1,7 +1,7 @@
 const queryKeys = Object.freeze({
   TASK: 'task',
-  TODOS: 'todos',
-  DONES: 'dones',
+  TODO: 'todo',
+  DONE: 'done',
 });
 
 export default queryKeys;
