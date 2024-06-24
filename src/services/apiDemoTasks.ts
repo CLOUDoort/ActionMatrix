@@ -18,19 +18,8 @@ export const getDemoTask = (type: string, taskId: string): Task => {
   return task;
 };
 
-export const getDemoTasks = (type: string, priority: string | null, difficulty: string | null): Task[] => {
+export const getDemoTasks = (type: string): Task[] => {
   let tasks = getTasksFromStorage(type);
-
-  if (!priority && !difficulty) return tasks;
-
-  if (priority) tasks = tasks.filter((el: Task) => el.priority === priority);
-
-  if (difficulty) {
-    const difficultyTasks = tasks.filter((el: Task) => el.difficulty === difficulty);
-    const subtaskTasks = tasks.filter((el: Task) => el.subtask && el.subtask[difficulty].length !== 0);
-
-    tasks = [...difficultyTasks, ...subtaskTasks];
-  }
 
   return tasks;
 };

@@ -27,15 +27,17 @@ export const useGetTask = (version: string, type: string, taskId: string) => {
   return { isLoading, task };
 };
 
-export const useGetTasks = (version: string, type: string, priority: string | null, difficulty: string | null) => {
+export const useGetTasks = (version: string, type: string) => {
   const key = type === 'todo' ? 'TODO' : 'DONE';
+
   const queryFn = async () => {
     if (version === 'demo') {
-      return Promise.resolve(getDemoTasks(type, priority, difficulty)); // 동기 함수 래핑
+      return Promise.resolve(getDemoTasks(type)); // 동기 함수 래핑
     } else {
-      return await getUserTasks(type, priority, difficulty); // 비동기 함수
+      return await getUserTasks(type); // 비동기 함수
     }
   };
+
   const { isLoading, data: task } = useQuery({ queryKey: [queryKeys[key]], queryFn });
 
   return { isLoading, task };
@@ -65,7 +67,7 @@ export const useFinishTask = (version: string) => {
   const queryClient = useQueryClient();
   const queryFn = async (focus: Focus) => {
     if (version === 'demo') {
-      return finishDemoTask(focus); // 동기 함수 래핑
+      return Promise.resolve(finishDemoTask(focus)); // 동기 함수 래핑
     } else {
       return await finishUserTask(focus); // 비동기 함수
     }
@@ -87,7 +89,7 @@ export const useFinishSubtask = (version: string) => {
 
   const queryFn = async (focus: Focus) => {
     if (version === 'demo') {
-      return finishDemoSubtask(focus);
+      return Promise.resolve(finishDemoSubtask(focus));
     } else {
       return await finishUserSubtask(focus); // 비동기 함수
     }

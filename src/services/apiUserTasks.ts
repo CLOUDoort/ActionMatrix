@@ -11,13 +11,9 @@ export const getUserTask = async (type: string, taskId: string): Promise<Task> =
   return task;
 };
 
-export const getUserTasks = async (type: string, priority: string | null, difficulty: string | null) => {
+export const getUserTasks = async (type: string) => {
   const userId = localStorage.getItem('userId')!;
   let query = supabase.from(type).select('*').eq('userId', userId);
-
-  if (priority) query = query.eq('priority', priority);
-
-  if (difficulty) query = query.or(`difficulty.eq.${difficulty},subtask.cs.${JSON.stringify([{ difficulty }])}`);
 
   // 쿼리 실행 및 에러 처리
   const { data: tasks, error } = await query;
