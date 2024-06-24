@@ -10,13 +10,14 @@ import { filterSubtask } from '@/utils/filterSubtask';
 import { useDeleteTask } from './queries';
 
 const TaskItem = ({ version, type, task }: { version: string; type: string; task: Task }) => {
-  const { title, progress, priority, difficulty, subtask } = task;
   const [detailsState, setDetailsState] = useState<boolean>(false);
+  const { title, progress, priority, difficulty, subtask } = task;
+  const { mutate: deleteTask } = useDeleteTask(version, type, task.id);
+
   const progressColor = calcProgressColor(progress);
   const filtered = subtask && filterSubtask(subtask);
 
   const handleDetailState = () => setDetailsState((state) => !state);
-  const { mutate: deleteTask } = useDeleteTask(version, type, task.id);
 
   return (
     <>

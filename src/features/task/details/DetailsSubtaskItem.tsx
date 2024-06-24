@@ -11,6 +11,7 @@ const TaskDetailsSubtaskItem = ({
   focusHandler: (type: string, item: Focus) => void;
 }) => {
   const { id, taskId, title, details, priority, difficulty, complete } = subtask;
+
   const focusSubtask: Focus = {
     id,
     taskId,
@@ -19,6 +20,7 @@ const TaskDetailsSubtaskItem = ({
     priority,
     difficulty,
   };
+
   return (
     <li className={`flex items-center justify-between gap-2 p-1 rounded ${complete ? 'text-slate-400' : ''}`}>
       <div className="flex items-center">
