@@ -4,9 +4,14 @@ import Button from './Button';
 import { HiOutlinePlus } from 'react-icons/hi2';
 import { ReactNode } from 'react';
 import Tag from './Tag';
+import { useAuthContext } from '@/authentication/AuthContext';
 
 const AppMain = ({ children, name }: { children: ReactNode; name: string }) => {
   const navigate = useNavigate();
+  const {
+    auth: { version },
+  } = useAuthContext();
+
   const [searchParams, setSearchParams] = useSearchParams();
   const priority = searchParams.get('priority');
   const difficulty = searchParams.get('difficulty');
@@ -30,7 +35,7 @@ const AppMain = ({ children, name }: { children: ReactNode; name: string }) => {
             {difficulty && <Tag type={difficulty} handler={difficultyHandler} />}
           </span>
         </div>
-        <Button name="create" handler={() => navigate('/app/create')}>
+        <Button name="create" handler={() => navigate(`/${version}/create`)}>
           <HiOutlinePlus size={20} />
           <span>New Task</span>
         </Button>

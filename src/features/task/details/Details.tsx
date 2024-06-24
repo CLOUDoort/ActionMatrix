@@ -13,6 +13,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useFinishSubtask, useFinishTask } from '../queries';
+import { useAuthContext } from '@/authentication/AuthContext';
 
 const initialState = {
   type: '',
@@ -34,7 +35,9 @@ interface TaskDetailsProps {
 const TaskDetails = ({ task, handleDetailState }: TaskDetailsProps) => {
   const navigate = useNavigate();
   const [focus, setFocus] = useState(initialState);
-  const version = localStorage.getItem('version')!;
+  const {
+    auth: { version },
+  } = useAuthContext();
 
   const { mutate: finishTask } = useFinishTask(version);
   const { mutate: finishSubtask } = useFinishSubtask(version);
@@ -56,22 +59,13 @@ const TaskDetails = ({ task, handleDetailState }: TaskDetailsProps) => {
   const focusHandler = (type: string, item: Focus) => setFocus({ type, item });
 
   const finishHandler = () => {
-    if (type === 'task') {
-      finishTask(item);
-      navigate('/app/task/done');
-      toast.success(`Finish ${item.title}`);
-    } else {
-      finishSubtask(item);
-      const flag = task?.completedSubtaskNum! + 1 === task?.subtaskNum ? true : false;
-      if (flag) {
-        toast.success(`Finish ${title}`);
-        navigate('/app/task/done');
-      } else {
-        toast.success(`Finish ${item.title}`);
-      }
-    }
+    if (type === 'task') finishTask(item);
+    else finishSubtask(item);
+
+    toast.success(`Finish ${item.title}`);
     setFocus(initialState);
   };
+
   return (
     <Modal handler={handleDetailState}>
       <div
@@ -121,7 +115,7 @@ const TaskDetails = ({ task, handleDetailState }: TaskDetailsProps) => {
           )}
         </div>
         <div className="flex items-center w-full gap-2 px-8">
-          <Button name="edit" handler={() => navigate(`/app/update/${taskType}/${id}`)}>
+          <Button name="edit" handler={() => navigate(`/${version}/update/${taskType}/${id}`)}>
             Edit
           </Button>
           {difficulty && (

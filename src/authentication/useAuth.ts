@@ -1,14 +1,13 @@
-import { useEffect } from 'react';
-import { useAuthContext } from './AuthContext';
 import { getUserProfile } from './getUserProfile';
+import { useAuthContext } from './AuthContext';
+import { useEffect } from 'react';
 
-export const useAuth = async () => {
+export const useAuth = async (version: string) => {
   const { demoAuth, loginAuth } = useAuthContext();
 
   useEffect(() => {
     const fetch = async () => {
       try {
-        const version = localStorage.getItem('version')!;
         if (version === 'demo') demoAuth();
         else {
           const user = await getUserProfile();

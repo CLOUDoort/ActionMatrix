@@ -23,14 +23,13 @@ const UpdateTask = () => {
       <div className="flex items-center justify-between h-16 pb-5 lg:text-h3 text-h4">
         <p>Update Task</p>
       </div>
-      <CreateTaskForm update={task} />
+      <CreateTaskForm version={version} update={task} />
     </section>
   );
 };
 
 export const loader: LoaderFunction<any> = ({ params }) => {
-  const { type, id } = params;
-  const version = localStorage.getItem('version')!;
+  const { version, type, id } = params;
 
   return { version, type, id };
 };

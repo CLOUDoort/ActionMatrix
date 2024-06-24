@@ -18,6 +18,7 @@ const AppNavList = ({ handler }: { handler: () => void }) => {
   const {
     auth: {
       user: { avatarUrl, name },
+      version,
     },
   } = useAuthContext();
 
@@ -40,11 +41,11 @@ const AppNavList = ({ handler }: { handler: () => void }) => {
 
         {/* Tasks */}
         <AppNavItem name="Tasks">
-          <NavLink to="/app/task/todo" end className={({ isActive }) => (isActive ? activeLink : normalLink)}>
+          <NavLink to={`/${version}/task/todo`} end className={({ isActive }) => (isActive ? activeLink : normalLink)}>
             <HiOutlineDocument size={24} />
             <span>Todo</span>
           </NavLink>
-          <NavLink to="/app/task/done" end className={({ isActive }) => (isActive ? activeLink : normalLink)}>
+          <NavLink to={`/${version}/task/done`} end className={({ isActive }) => (isActive ? activeLink : normalLink)}>
             <HiOutlineDocumentCheck size={24} />
             <span>Done</span>
           </NavLink>
@@ -69,7 +70,7 @@ const AppNavList = ({ handler }: { handler: () => void }) => {
       <li className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="rounded-[50%] w-6 h-6 relative overflow-hidden">
-            {name === 'demo' ? (
+            {version === 'demo' ? (
               <HiOutlineUserCircle size={24} />
             ) : avatarUrl ? (
               <img src={avatarUrl} alt="avatar" />
@@ -79,7 +80,7 @@ const AppNavList = ({ handler }: { handler: () => void }) => {
           </div>
           <span className="text-sm">{name ? name : 'loading'}</span>
         </div>
-        {name !== 'demo' && (
+        {version !== 'demo' && (
           <button
             onClick={handleLogout}
             className="px-3 py-2 text-xs transition-colors border rounded border-slate-500 text-slate-600 hover:bg-black/5 active:bg-black/10"

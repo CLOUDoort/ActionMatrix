@@ -1,6 +1,7 @@
 import { DetailsInput, TitleInput } from './FormInput';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { calcCompletedNum, calcSubtaskNum } from '@/utils/calcSubtaskNum';
+import { useCreateTask, useUpdateTask } from '../queries';
 
 import Button from '../../../ui/Button';
 import CreateSubtask from '../CreateSubtask';
@@ -15,12 +16,10 @@ import { toast } from 'react-toastify';
 import { useCreateSubtask } from '../CreateSubtaskContext';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { useCreateTask, useUpdateTask } from '../queries';
 
-const CreateTaskForm = ({ update }: { update?: Task }) => {
+const CreateTaskForm = ({ version, update }: { version: string; update?: Task }) => {
   const navigate = useNavigate();
   const origin = update?.progress === 100 ? 'done' : 'todo';
-  const version = localStorage.getItem('version')!;
   const { mutate: createTask } = useCreateTask(version, 'todo');
   const { mutate: updateTask } = useUpdateTask(version, origin);
   const { subtask, clearSubtask } = useCreateSubtask();
@@ -82,10 +81,10 @@ const CreateTaskForm = ({ update }: { update?: Task }) => {
       }
       const next = task.progress === 100 ? 'done' : 'todo';
       updateTask(task);
-      navigate(`/app/task/${next}`);
+      navigate(`/${version}/task/${next}`);
     } else {
       const taskId = nanoid(8);
-      const userId = localStorage.getItem('userId')!;
+      const userId = localStorage.getItem('userId') || 'demo';
       const createdAt = formattedDate(new Date());
       const base = {
         id: taskId,
@@ -110,7 +109,7 @@ const CreateTaskForm = ({ update }: { update?: Task }) => {
       }
 
       createTask(task);
-      navigate('/app/task/todo');
+      navigate(`/${version}/task/todo`);
     }
     handleReset();
   };

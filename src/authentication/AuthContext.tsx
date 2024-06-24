@@ -25,12 +25,12 @@ const reducer = (state: Auth, action: AuthAction): Auth => {
         },
       };
     }
-    case 'auth/login': {
+    case 'auth/app': {
       if (!action.payload) throw new Error('User information is required');
       const { name, avatarUrl } = action.payload;
       return {
         ...state,
-        version: 'login',
+        version: 'app',
         user: {
           name,
           avatarUrl,
@@ -38,7 +38,7 @@ const reducer = (state: Auth, action: AuthAction): Auth => {
       };
     }
     default:
-      throw new Error('Unknown Action type');
+      throw new Error('Unknown AuthContext Action type');
   }
 };
 
@@ -53,7 +53,7 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   const loginAuth = (user: User) => {
     dispatch({
-      type: 'auth/login',
+      type: 'auth/app',
       payload: user,
     });
   };
