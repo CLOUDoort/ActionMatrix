@@ -2,20 +2,16 @@ import Button from './Button';
 import { FcGoogle } from 'react-icons/fc';
 import HomeFeature from './HomeFeature';
 import { googleLogin } from '@/authentication/googleLogin';
-import { useLocalStorageState } from '@/hooks/useLocalStorageState';
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const navigate = useNavigate();
-  const [_, setVersion] = useLocalStorageState('version', '');
 
   const clickDemo = () => {
-    setVersion('demo');
-    navigate('/app/task/todo');
+    navigate('/demo/task/todo');
   };
 
   const clickGoogleLogin = () => {
-    setVersion('user');
     googleLogin();
   };
 

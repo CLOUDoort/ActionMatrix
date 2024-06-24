@@ -1,7 +1,7 @@
+import AppLayout, { loader as layoutLoader } from './ui/AppLayout';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import TodoList, { loader as taskLoader } from './features/task/TaskList';
 
-import AppLayout from './ui/AppLayout';
 import CreateTask from './features/create/CreateTask';
 import ErrorBoundary from './ui/ErrorBoundary';
 import Home from './ui/Home';
@@ -18,9 +18,10 @@ const App = () => {
     {
       element: <AppLayout />,
       errorElement: <ErrorBoundary />,
+      loader: layoutLoader,
       children: [
         {
-          path: '/app/task/:type',
+          path: '/:version/task/:type',
           element: <TodoList />,
           loader: taskLoader,
           errorElement: <ErrorBoundary />,
@@ -34,13 +35,13 @@ const App = () => {
           ],
         },
         {
-          path: '/app/update/:type/:id',
+          path: '/:version/update/:type/:id',
           element: <UpdateTask />,
           loader: updateLoader,
           errorElement: <ErrorBoundary />,
         },
         {
-          path: '/app/create',
+          path: '/:version/create',
           element: <CreateTask />,
           errorElement: <ErrorBoundary />,
         },
