@@ -9,6 +9,7 @@ const NoTasks = ({ type }: { type: string }) => {
   const {
     auth: { version },
   } = useAuthContext();
+
   return (
     <div className="flex items-center justify-center h-full p-10">
       <div className="flex flex-col items-center justify-center w-56 gap-5">
