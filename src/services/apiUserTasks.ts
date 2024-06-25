@@ -61,9 +61,10 @@ export const finishUserTask = async (focus: Focus) => {
 export const finishUserSubtask = async (focus: Focus) => {
   // subtask를 완료하고 subtask의 task에 반영
   const task = await getUserTask('todo', focus.taskId);
-  if (!task.subtask || !task.subtaskNum || !task.completedSubtaskNum) {
+  if (!task.subtask || task.subtaskNum === undefined || task.completedSubtaskNum === undefined) {
     throw new Error('Error: no subtask!');
   }
+
   const subtasks = task.subtask[focus.difficulty];
   const subtaskIndex = subtasks.findIndex((el: SubtaskItem) => el.id === focus.id);
   if (subtaskIndex !== -1) subtasks[subtaskIndex].complete = true;
