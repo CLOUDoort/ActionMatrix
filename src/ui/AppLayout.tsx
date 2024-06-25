@@ -2,7 +2,6 @@ import { LoaderFunction, Outlet, useLoaderData, useNavigation } from 'react-rout
 
 import AppNav from './Navigation/AppNav';
 import Loader from './Loader';
-import { CreateSubtaskContextProvider } from '@/features/create/CreateSubtaskContext';
 import { useAuth } from '@/authentication/useAuth';
 
 const AppLayout = () => {
@@ -13,15 +12,13 @@ const AppLayout = () => {
   useAuth(version);
 
   return (
-    <CreateSubtaskContextProvider>
-      <div className="flex w-full h-screen">
-        {isLoading && <Loader />}
-        <AppNav />
-        <main className="flex justify-center flex-1 h-full overflow-y-scroll">
-          <Outlet />
-        </main>
-      </div>
-    </CreateSubtaskContextProvider>
+    <div className="flex w-full h-screen">
+      {isLoading && <Loader />}
+      <AppNav />
+      <main className="flex justify-center flex-1 h-full overflow-y-scroll">
+        <Outlet />
+      </main>
+    </div>
   );
 };
 

@@ -15,14 +15,14 @@ import { nanoid } from 'nanoid';
 import { toast } from 'react-toastify';
 import { useCreateSubtask } from '../CreateSubtaskContext';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const CreateTaskForm = ({ version, update }: { version: string; update?: Task }) => {
   const navigate = useNavigate();
   const origin = update?.progress === 100 ? 'done' : 'todo';
   const { mutate: createTask } = useCreateTask(version, 'todo');
   const { mutate: updateTask } = useUpdateTask(version, origin);
-  const { subtask, clearSubtask } = useCreateSubtask();
+  const { subtask, clearSubtask, initSubtask } = useCreateSubtask();
 
   const {
     register,
@@ -113,6 +113,12 @@ const CreateTaskForm = ({ version, update }: { version: string; update?: Task })
     }
     handleReset();
   };
+
+  useEffect(() => {
+    if (update) {
+      initSubtask(update.subtask);
+    }
+  }, []);
 
   return (
     <div className={`flex-1 flex gap-5 xl:flex-row flex-col pb-10`}>

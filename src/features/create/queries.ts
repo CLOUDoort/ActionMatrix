@@ -44,6 +44,7 @@ export const useUpdateTask = (version: string, origin: 'done' | 'todo') => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [queryKeys.TODO] });
       queryClient.invalidateQueries({ queryKey: [queryKeys.DONE] });
+      queryClient.invalidateQueries({ queryKey: [queryKeys.TASK] });
     },
   });
 
