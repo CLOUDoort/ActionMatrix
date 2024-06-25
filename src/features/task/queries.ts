@@ -22,7 +22,7 @@ export const useGetTask = (version: string, type: string, taskId: string) => {
       return await getUserTask(type, taskId); // 비동기 함수
     }
   };
-  const { isLoading, data: task } = useQuery({ queryKey: [queryKeys.TASK], queryFn });
+  const { isLoading, data: task } = useQuery({ queryKey: [queryKeys.TASK, taskId], queryFn });
 
   return { isLoading, task };
 };
