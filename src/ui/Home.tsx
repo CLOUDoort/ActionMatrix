@@ -27,8 +27,8 @@ const Home = () => {
         </header>
 
         <main className="flex flex-col items-center justify-center w-full h-full gap-10 p-5 text-center">
-          <div className="mt-3 space-y-5 tracking-wider lg:mt-10 ">
-            <h2 className="text-base sm:text-h5 md:text-h4 lg:text-h3">Prioritize Your Work</h2>
+          <div className="mt-3 space-y-4 tracking-wider lg:mt-10 ">
+            <h2 className="text-h5 md:text-h4 lg:text-h3">Prioritize Your Work</h2>
             <h4 className="text-sm md:text-base lg:text-h5 text-slate-500">
               start with something that's really important but easy task.
             </h4>

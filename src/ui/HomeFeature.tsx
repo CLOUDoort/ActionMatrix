@@ -6,11 +6,11 @@ const HomeFeature = () => {
 
   return (
     <section className="flex flex-col w-full">
-      <h2 className="lg:text-h2 md:text-h3 sm:text-h4 text-h5 text-start">Features of the product</h2>
+      <h2 className="text-base md:text-h5 lg:text-h4 text-start">Features of the product</h2>
       <hr className="my-3 lg:my-5" />
       <div className="flex flex-wrap gap-7 lg:gap-0 md:gap-3 item-center">
         <figcaption className="w-full">
-          <ul className="space-y-2 text-xs lg:space-y-7 lg:text-h4 md:text-h5 sm:text-base text-start">
+          <ul className="space-y-2 text-sm lg:space-y-5 md:text-base lg:text-h5 text-start">
             <ListItem state="newTask" cur={state}>
               <p onClick={() => handleState('newTask')}>Prioritize tasks and create subtasks as needed.</p>
             </ListItem>

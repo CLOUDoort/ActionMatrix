@@ -67,7 +67,7 @@ const CreateSubtaskForm = ({ priority, handleFormState, update }: CreateSubtaskF
 
   return (
     <form
-      className="flex flex-col w-full gap-2 p-8 border rounded-md border-slate-200"
+      className="flex flex-col w-full gap-2 border-slate-200"
       onSubmit={handleSubmit(onSubmit)}
     >
       <FormLabel>

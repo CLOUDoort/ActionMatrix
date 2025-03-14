@@ -1,21 +1,21 @@
-import { DetailsInput, TitleInput } from './FormInput';
-import { SubmitHandler, useForm } from 'react-hook-form';
 import { calcCompletedNum, calcSubtaskNum } from '@/utils/calcSubtaskNum';
-import { useCreateTask, useUpdateTask } from '../queries';
 import { useEffect, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { useCreateTask, useUpdateTask } from '../queries';
+import { DetailsInput, TitleInput } from './FormInput';
 
-import Button from '../../../ui/Button';
-import CreateSubtask from '../CreateSubtask';
 import FormLabel from '@/features/create/form/FormLabel';
-import FormTag from './FormTag';
-import type { Inputs } from 'Create';
-import type { Task } from 'Task';
 import { assignTaskId } from '@/utils/assignTaskId';
 import { formattedDate } from '@/utils/formattedDate';
+import type { Inputs } from 'Create';
+import type { Task } from 'Task';
 import { nanoid } from 'nanoid';
-import { toast } from 'react-toastify';
-import { useCreateSubtask } from '../CreateSubtaskContext';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import Button from '../../../ui/Button';
+import CreateSubtask from '../CreateSubtask';
+import { useCreateSubtask } from '../CreateSubtaskContext';
+import FormTag from './FormTag';
 
 const CreateTaskForm = ({ version, update }: { version: string; update?: Task }) => {
   const navigate = useNavigate();
@@ -124,7 +124,7 @@ const CreateTaskForm = ({ version, update }: { version: string; update?: Task })
     <div className={`flex-1 flex gap-5 xl:flex-row flex-col pb-10`}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full p-8 space-y-4 border rounded-md border-slate-200 xl:w-[29rem] min-w-[25rem] h-full"
+        className="w-full h-full p-6 space-y-4 border rounded-md border-slate-200"
       >
         <FormLabel name="Title" error={errors.title?.message}>
           <TitleInput register={register} />

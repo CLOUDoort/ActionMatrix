@@ -6,7 +6,7 @@ export const TitleInput = ({ register }: { register: UseFormRegister<Inputs> }) 
     <input
       type="text"
       id="title"
-      className="p-2 border-2 rounded-md border-slate-200"
+      className="p-2 text-xs border rounded-md md:p-3 md:border-2 border-slate-200 lg:text-base"
       placeholder="title"
       {...register('title', {
         required: 'title is required',
@@ -23,8 +23,8 @@ export const DetailsInput = ({ register }: { register: UseFormRegister<Inputs> }
   return (
     <textarea
       id="details"
-      className="p-2 border-2 rounded-md border-slate-200 min-h-20"
-      placeholder="detail"
+      className="p-2 text-xs border rounded-md md:p-3 md:border-2 border-slate-200 min-h-10 md:min-h-20 lg:text-base"
+      placeholder="details"
       {...register('details', {
         required: 'details is required',
         maxLength: {

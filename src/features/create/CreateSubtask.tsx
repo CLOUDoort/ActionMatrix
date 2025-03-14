@@ -25,10 +25,10 @@ const CreateSubtask = ({ priority, option, flashHandler }: CreateSubtaskProps) =
 
   return (
     <div
-      className={`flex-1 p-8 space-y-5 border rounded-md min-w-[345px] min-h-[32.625rem] border-slate-200 h-full ${option ? 'opacity-60 cursor-not-allowed' : ''} overflow-y-scroll`}
+      className={`flex-1 p-6 space-y-5 border rounded-md min-h-[32.625rem] xl:min-w-[400px] border-slate-200 h-full ${option ? 'opacity-60 cursor-not-allowed' : ''} overflow-y-scroll`}
       onClick={clickDisabledBtn}
     >
-      <h1 className="text-h4">Subtask</h1>
+      <h1 className="text-base lg:text-h5">Subtask</h1>
       <CreateSubtaskList option={option} />
 
       {/* New Subtask Button */}
