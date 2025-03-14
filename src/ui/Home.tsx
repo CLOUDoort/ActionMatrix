@@ -1,8 +1,9 @@
-import Button from './Button';
-import { FcGoogle } from 'react-icons/fc';
-import HomeFeature from './HomeFeature';
 import { googleLogin } from '@/authentication/googleLogin';
+import { FcGoogle } from 'react-icons/fc';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import Button from './Button';
+import HomeFeature from './HomeFeature';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -12,6 +13,8 @@ const Home = () => {
   };
 
   const clickGoogleLogin = () => {
+    toast.info("Only the demo version is available.");
+    return;
     googleLogin();
   };
 
@@ -31,7 +34,7 @@ const Home = () => {
             </h4>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-5 sm:mb-10">
+          <div className="flex items-center justify-center gap-5 sm:mb-10">
             <Button handler={clickDemo} name="try">
               Try a Demo
             </Button>
@@ -49,7 +52,7 @@ const Home = () => {
           <HomeFeature />
 
           <footer className="flex items-center justify-center py-5 text-xs sm:text-base">
-            Copyright 2024. KangJunSeok All Rights Reserved.
+            Copyright 2025. KangJunSeok All Rights Reserved.
           </footer>
         </main>
       </div>
