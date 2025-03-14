@@ -4,7 +4,7 @@ import { twMerge } from 'tailwind-merge';
 const base =
   'flex items-center gap-2 text-xs px-3 sm:text-base whitespace-nowrap py-2 sm:min-w-[5rem] rounded transition-all';
 const homeButtonBase =
-  'px-4 py-3 transition-all duration-300  lg:px-8 lg:py-4 text-xs lg:text-h5 w-[14rem] lg:w-[20rem] lg:h-[3.75rem] rounded-xl';
+  'px-4 py-3 transition-all duration-300 md:px-6 md:py-4   lg:px-8 lg:py-5 text-sm md:text-h5 rounded-xl w-full';
 const indigoButton = base + ' text-white justify-center bg-Indigo hover:bg-IndigoHover active:bg-IndigoActive';
 
 const styles: { [key: string]: string } = {

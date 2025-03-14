@@ -1,14 +1,14 @@
 import type { CreateSubtaskFormProps, Inputs } from 'Create';
-import { DetailsInput, TitleInput } from './FormInput';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { DetailsInput, TitleInput } from './FormInput';
 
 import Button from '@/ui/Button';
-import FormLabel from './FormLabel';
-import FormTag from './FormTag';
 import { nanoid } from 'nanoid';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useCreateSubtask } from '../CreateSubtaskContext';
-import { useState } from 'react';
+import FormLabel from './FormLabel';
+import FormTag from './FormTag';
 
 const CreateSubtaskForm = ({ priority, handleFormState, update }: CreateSubtaskFormProps) => {
   const { createSubtask, updateSubtask } = useCreateSubtask();
@@ -67,7 +67,7 @@ const CreateSubtaskForm = ({ priority, handleFormState, update }: CreateSubtaskF
 
   return (
     <form
-      className="w-full p-8 flex flex-col gap-2 border rounded-md border-slate-200 min-w-[25rem]"
+      className="flex flex-col w-full gap-2 p-8 border rounded-md border-slate-200"
       onSubmit={handleSubmit(onSubmit)}
     >
       <FormLabel>

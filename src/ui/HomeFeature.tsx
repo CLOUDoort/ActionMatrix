@@ -5,11 +5,11 @@ const HomeFeature = () => {
   const handleState = (data: string) => setState(data);
 
   return (
-    <section className="w-[90%] flex flex-col">
+    <section className="flex flex-col w-full">
       <h2 className="lg:text-h2 md:text-h3 sm:text-h4 text-h5 text-start">Features of the product</h2>
       <hr className="my-3 lg:my-5" />
       <div className="flex flex-wrap gap-7 lg:gap-0 md:gap-3 item-center">
-        <figcaption className="lg:min-w-[35rem] min-w-[17rem]">
+        <figcaption className="w-full">
           <ul className="space-y-2 text-xs lg:space-y-7 lg:text-h4 md:text-h5 sm:text-base text-start">
             <ListItem state="newTask" cur={state}>
               <p onClick={() => handleState('newTask')}>Prioritize tasks and create subtasks as needed.</p>
