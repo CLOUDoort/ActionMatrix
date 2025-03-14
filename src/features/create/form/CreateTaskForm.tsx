@@ -2,6 +2,7 @@ import { DetailsInput, TitleInput } from './FormInput';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { calcCompletedNum, calcSubtaskNum } from '@/utils/calcSubtaskNum';
 import { useCreateTask, useUpdateTask } from '../queries';
+import { useEffect, useState } from 'react';
 
 import Button from '../../../ui/Button';
 import CreateSubtask from '../CreateSubtask';
@@ -15,7 +16,6 @@ import { nanoid } from 'nanoid';
 import { toast } from 'react-toastify';
 import { useCreateSubtask } from '../CreateSubtaskContext';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 
 const CreateTaskForm = ({ version, update }: { version: string; update?: Task }) => {
   const navigate = useNavigate();

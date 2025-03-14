@@ -1,13 +1,14 @@
 import { LoaderFunction, useLoaderData } from 'react-router-dom';
-import CreateTaskForm from './form/CreateTaskForm';
+
 import FormLayout from '@/ui/FormLayout';
+import CreateTaskForm from './form/CreateTaskForm';
 
 const CreateTask = () => {
-  const version = useLoaderData() as string;
+  const data: { version: string } = useLoaderData() as { version: string };
 
   return (
     <FormLayout name="New Task">
-      <CreateTaskForm version={version} />
+      <CreateTaskForm version={data.version} />
     </FormLayout>
   );
 };

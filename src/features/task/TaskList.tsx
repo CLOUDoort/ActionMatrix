@@ -50,6 +50,9 @@ const TaskList = () => {
 export const loader: LoaderFunction<any> = async ({ params, request }) => {
   const url = new URL(request.url);
   const { version, type } = params;
+
+  if (!/demo|app/.test(String(version)) || !/todo|done/.test(String(type))) throw new Error('404 Not Found');
+
   const priority = url.searchParams.get('priority');
   const difficulty = url.searchParams.get('difficulty');
 

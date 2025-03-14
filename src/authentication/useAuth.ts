@@ -1,6 +1,6 @@
-import { getUserProfile } from './getUserProfile';
-import { useAuthContext } from './AuthContext';
 import { useEffect } from 'react';
+import { useAuthContext } from './AuthContext';
+import { getUserProfile } from './getUserProfile';
 
 export const useAuth = async (version: string) => {
   const { demoAuth, loginAuth } = useAuthContext();
