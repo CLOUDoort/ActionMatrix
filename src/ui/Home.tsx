@@ -40,7 +40,7 @@ const Home = () => {
             </Button>
             <Button handler={clickGoogleLogin} name="google">
               <div className="flex items-center justify-center gap-3 whitespace-nowrap">
-                <FcGoogle className="size-2 lg:size-4" /> Google
+                <FcGoogle className="size-4 lg:size-6" /> Google
               </div>
             </Button>
           </div>
